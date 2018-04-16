@@ -1,5 +1,5 @@
 
-[![Build Status](https://travis-ci.org/pimssas/api-client.svg?branch=dev)](https://travis-ci.org/pimssas/api-client)  
+[![Build Status](https://travis-ci.org/pimssas/pims-api-client-php.svg?branch=dev)](https://travis-ci.org/pimssas/pims-api-client-php)  
   
 Pims Api Client  
 =========================  
