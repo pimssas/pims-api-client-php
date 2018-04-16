@@ -1,26 +1,44 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: pims-banane
- * Date: 05/04/18
- * Time: 12:04
- */
 
 use PHPUnit\Framework\TestCase;
 use Pims\Api\Client;
 
 class PimsClientTest extends TestCase {
 
-	var $client;
-
-	public function test__construct()
-	{
+	public function test__construct() {
 		try {
-			$this->client = new Client('http://api.opensupporter.org/', 'test', 'test');
+			$client = new Client('https://demo.pims.io/api/v1', getenv('PIMS_API_USER'), getenv('PIMS_API_PASSWORD'));
 		} catch (\Exception $e) {
-
+			$this->assertTrue(false, $e->getMessage());
 		}
 
-		self::assertTrue(is_object($this->client), 'Contruction OK');
+		self::assertTrue(is_object($client), 'Contruction OK');
+		return $client;
 	}
+
+	public function testGetOne() {
+
+		try {
+			$client = new Client('https://demo.pims.io/api/v1', getenv('PIMS_API_USER'), getenv('PIMS_API_PASSWORD'));
+
+			$data = $client->getOne('/events', 2127);
+		} catch (\Exception $e) {
+			$this->assertTrue(false, $e->getMessage());
+		}
+
+		self::assertTrue(is_object($data), 'getOne OK');
+	}
+
+	public function testGetAll() {
+		try {
+			$client = new Client('https://demo.pims.io/api/v1', getenv('PIMS_API_USER'), getenv('PIMS_API_PASSWORD'));
+
+			$data = $client->getAll('/events');
+		} catch (\Exception $e) {
+			$this->assertTrue(false, $e->getMessage());
+		}
+
+		self::assertTrue(is_object($data), 'getAll OK');
+	}
+
 }

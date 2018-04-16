@@ -1,11 +1,9 @@
 <?php
 
-namespace Pims\Api;
+namespace Pims\Api\Exception;
 
-use Exception;
-
-class ClientException extends Exception {
-	public function __construct(string $message, int $code, Exception $previous = null) {
+class ClientException extends \Exception {
+	public function __construct(string $message, int $code, \Exception $previous = null) {
 
 		parent::__construct($message, $code, $previous);
 	}
