@@ -1,7 +1,7 @@
 {
-    "name": "Pims/api-client",
-    "description": "tiny client dor hal api",
-    "keywords": ["template", "composer", "package"],
+    "name": "pimssas/pims-api-client-php",
+    "description": "Simple php client for Pims-Api",
+    "keywords": ["pims", "api-wrapper"],
     "license": "Apache",
     "authors": [
         {

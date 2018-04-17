@@ -20,7 +20,7 @@ class Client {
 	 * @param string	$password	Password for the Basic Auth
 	 * @throws \Exception
 	 */
-	public function __construct (string $url,string $username,string $password) {
+	public function __construct (string $url, string $username, string $password) {
 
 		$this->basePath = parse_url($url)['path'];
 
