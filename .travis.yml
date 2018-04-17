@@ -15,3 +15,5 @@ install:
 script:
   - ./vendor/bin/phpunit --coverage-clover=coverage.xml
 
+notifications:
+  email: false
