@@ -2,7 +2,7 @@
     "name": "pimssas/pims-api-client-php",
     "description": "Simple php client for Pims-Api",
     "keywords": ["pims", "api-wrapper"],
-    "license": "Apache",
+    "license": "MIT",
     "authors": [
         {
             "name": "Pims",
