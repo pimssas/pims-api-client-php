@@ -14,7 +14,7 @@ Simple php client for Pims-Api ([Documentation](http://api.pims.io))
 Installation
 -----
 
-```php
+```bash
 composer require pimssas/pims-api-client-php:"dev-master"
 ```
 
@@ -35,7 +35,7 @@ use Pims\Api\Client;
 try {
     $client = new Client('https://demo.pims.io/api/v1', 'user', 'password');
 } catch (\Exception $e) {
-    $e
+    echo $e->getMessage();
 }
 
 ```
@@ -43,12 +43,12 @@ try {
 ### Get One Events
 
 ```php
-
-$client = new Client('https://demo.pims.io/api/v1', 'user', 'password');  
+$client = new Client('https://demo.pims.io/api/v1', 'user', 'password'); 
+ 
 try {  
     $data = $client->getOne('/events', 2127);
 } catch (ClientException $e) {
-    $e
+    echo $e->getMessage();
 }
 ```
 
@@ -59,7 +59,7 @@ $client = new Client('https://demo.pims.io/api/v1', 'user', 'password');
 try {
     $data = $client->getAll('/events');
 } catch (ClientException $e) {
-    $e
+    echo $e->getMessage();
 }
 ```
 
