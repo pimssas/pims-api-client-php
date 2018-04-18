@@ -68,7 +68,24 @@ class Client {
 	}
 
 	/**
-	 * Fonction permettant la suppresion d'une entite
+	 * Fonction permettant l'ajout d'une entite
+	 *
+	 * @param string		$url	Url correspondant au point d'appel de l'ajout
+	 * @param array			$body	Corp de la requete. L'array sera encodé via json_encode()
+	 *
+	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
+	 * @throws ClientException
+	 */
+	public function postOne (string $url, array $body) {
+		try {
+			return $this->client->post($this->basePath . $url, ['body' => $body]);
+		} catch (Exception $e) {
+			throw new ClientException("bad postOne", 42, $e);
+		}
+	}
+
+	/**
+	 * Fonction permettant la suppression d'une entite
 	 *
 	 * @param string	$url	Url correspondant au point d'appel de suppression (ex: '/events')
 	 * @param int		$id		Id de l'élément qu'il faut supprimer (ex: '2127')
@@ -87,7 +104,7 @@ class Client {
 	/**
 	 * @param string	$url	Url correspondant au point d'appel de suppression (ex: '/events')
 	 * @param int		$id		Id de l'élément qu'il faut patché (ex: '2127')
-	 * @param array		$body
+	 * @param array		$body 	Corp de la requete. L'array sera encodé via json_encode()
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
 	 * @throws ClientException
