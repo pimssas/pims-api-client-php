@@ -14,7 +14,7 @@ Simple PHP client for the Pims API ([documentation here](http://api.pims.io)).
 Requirement
 -----
 
-```json
+```
 php >= 7.0
 ```
 
@@ -23,7 +23,7 @@ Installation
 -----
 
 Use [Composer](https://getcomposer.org/) to install. Simply add this line to your `composer.json` file:
-```json
+```
 "require": {
 	"pimssas/pims-api-client-php": "dev-master"
 }
@@ -70,18 +70,18 @@ try {
 
 Then you can call it on various endpoints, like this:
 ```php
-use Pims\Api\Resource;
+use Pims\Api\Endpoint;
 
 try {
     // Display the label of the event by ID 2127
     $event = $client->getOne(
-    	Resource::EVENTS,
+    	Endpoint::EVENTS,
     	2127);
     echo $event['label'];
     
     // Get the 10 last promotions applied to the event by ID 2127
     $promotions = $client->getAll(
-       	Resource::EVENTS_PROMOTIONS,
+       	Endpoint::EVENTS_PROMOTIONS,
        	[
        		':event_id' => 2127,
        		'sort'      => '-date', 
@@ -90,7 +90,7 @@ try {
     
     // Get all events occuring in April 2018:
     $results = $client->getAll(
-    	Resource::EVENTS,
+    	Endpoint::EVENTS,
     	[
     	    'from_date'	=> '2018-04-01',
     	    'to_date' 	=> '2018-04-30'
@@ -103,7 +103,7 @@ try {
     
     // Delete the venue by ID 234
     $client->deleteOne(
-     	Resource::VENUES,
+     	Endpoint::VENUES,
        	234);
 } catch (ClientException $e) {
     echo $e->getMessage();

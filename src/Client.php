@@ -64,16 +64,16 @@ class Client {
 	}
 	
 	/**
-	 * If some $params begin with a semi-colon (e.g. ":event_id"), substitute them in the $url and remove them from $params
+	 * If some $params begin with a semi-colon (e.g. ":event_id"), substitute them in the $endpoint and remove them from $params
 	 *
 	 * @param array		&$params
-	 * @param string	&$url
+	 * @param string	&$endpoint
 	 */
-	private function substitutePathParameters (array &$params = null, string &$url) {
+	private function substitutePathParameters (array &$params = null, string &$endpoint) {
 		if (! empty($params)) {
 			foreach ($params as $key => $value) {
 				if ($key[0] === ':') {
-					$url = str_replace($key, $value, $url);
+					$endpoint = str_replace($key, $value, $endpoint);
 					unset($params[$key]);
 				}
 			}
@@ -83,138 +83,139 @@ class Client {
 	/**
 	 * Get a single resource by ID
 	 *
-	 * @param string	$url	Enpoint of the resource to fetch (see \Pims\Api\Resource for the possible values)
-	 * @param int		$id		ID of the resource to fetch
-	 * @param array		$params Query parameters
+	 * @param string $endpoint Endpoint of the resource to fetch (see \Pims\Api\Resource for the possible values)
+	 * @param int    $id       ID of the resource to fetch
+	 * @param array  $params   Query parameters
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
 	 * @throws ClientException
 	 */
-	public function getOne (string $url, int $id, array $params = null) {
+	public function getOne (string $endpoint, int $id, array $params = null) {
 		try {
-			$this->substitutePathParameters($url, $params);
+			$this->substitutePathParameters($endpoint, $params);
 			
 			return $this->client->get(
-					$this->getFullPath() . $url . '/' . $id,
+					$this->getFullPath() . $endpoint . '/' . $id,
 					[
 							'headers'	=> ['Accept-Language' => $this->language],
 							'query' 	=> $params
 					]);
 		} catch (Exception $e) {
-			throw new ClientException("Can't GET a single resource on endpoint $url", $e->getCode(), $e);
+			throw new ClientException("Can't GET a single resource on endpoint $endpoint", $e->getCode(), $e);
 		}
 	}
 
 	/**
 	 * Get a collection of resources
 	 *
-	 * @param string	$url	Enpoint of the resources to fetch (see \Pims\Api\Resource for the possible values)
-	 * @param array		$params Query parameters (mostly filters)
+	 * @param string $endpoint Endpoint of the resources to fetch (see \Pims\Api\Resource for the possible values)
+	 * @param array  $params   Query parameters (mostly filters)
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
 	 * @throws ClientException
 	 */
-	public function getAll (string $url, array $params = null) {
+	public function getAll (string $endpoint, array $params = null) {
 		try {
-			$this->substitutePathParameters($url, $params);
+			$this->substitutePathParameters($endpoint, $params);
 			
 			return $this->client->get(
-					$this->getFullPath() . $url,
+					$this->getFullPath() . $endpoint,
 					[
 							'headers'	=> ['Accept-Language' => $this->language],
 							'query' 	=> $params
 					]);
 		} catch (Exception $e) {
-			throw new ClientException("Can't GET a collection of resources on endpoint $url", $e->getCode(), $e);
+			throw new ClientException("Can't GET a collection of resources on endpoint $endpoint", $e->getCode(), $e);
 		}
 	}
 	
 	/**
 	 * Create a new resource
 	 *
-	 * @param string	$url	Enpoint of the resource to create (see \Pims\Api\Resource for the possible values)
-	 * @param array		$body	Values to be created
+	 * @param string $endpoint Endpoint of the resource to create (see \Pims\Api\Resource for the possible values)
+	 * @param array  $body     Values to be created
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
 	 * @throws ClientException
 	 */
-	public function postOne (string $url, array $body) {
+	public function postOne (string $endpoint, array $body) {
 		try {
-			$this->substitutePathParameters($url, $params);
+			$this->substitutePathParameters($endpoint, $params);
 			
 			return $this->client->post(
-					$this->getFullPath() . $url,
+					$this->getFullPath() . $endpoint,
 					['body' => $body]);
 		} catch (Exception $e) {
-			throw new ClientException("Can't POST a single resource on endpoint $url", $e->getCode(), $e);
+			throw new ClientException("Can't POST a single resource on endpoint $endpoint", $e->getCode(), $e);
 		}
 	}
 	
 	/**
 	 * Update a single resource by ID
 	 *
-	 * @param string	$url	Enpoint of the resource to update (see \Pims\Api\Resource for the possible values)
-	 * @param int		$id		ID of the resource to update
-	 * @param array		$body	New values to be updated
+	 * @param string $endpoint Endpoint of the resource to update (see \Pims\Api\Resource for the possible values)
+	 * @param int    $id       ID of the resource to update
+	 * @param array  $body     New values to be updated
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
 	 * @throws ClientException
 	 */
-	public function patchOne (string $url, int $id, array $body) {
+	public function patchOne (string $endpoint, int $id, array $body) {
 		try {
-			$this->substitutePathParameters($url, $params);
+			$this->substitutePathParameters($endpoint, $params);
 			
 			return $this->client->request(
 					'PATCH',
-					$this->getFullPath() . $url . '/' . $id,
+					$this->getFullPath() . $endpoint . '/' . $id,
 					['body' => $body]);
 		} catch (Exception $e) {
-			throw new ClientException("Can't PATCH a single resource on endpoint $url", $e->getCode(), $e);
+			throw new ClientException("Can't PATCH a single resource on endpoint $endpoint", $e->getCode(), $e);
 		}
 	}
 	
 	/**
 	 * Delete a single resource by ID
 	 *
-	 * @param string	$url	Enpoint of the resource to delete (see \Pims\Api\Resource for the possible values)
-	 * @param int		$id		ID of the resource to delete
+	 * @param string $endpoint Endpoint of the resource to delete (see \Pims\Api\Resource for the possible values)
+	 * @param int    $id       ID of the resource to delete
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
 	 * @throws ClientException
 	 */
-	public function deleteOne (string $url, int $id) {
+	public function deleteOne (string $endpoint, int $id) {
 		try {
-			$this->substitutePathParameters($url, $params);
+			$this->substitutePathParameters($endpoint, $params);
 			
-			return $this->client->delete($this->getFullPath() . $url . '/' . $id);
+			return $this->client->delete($this->getFullPath() . $endpoint . '/' . $id);
 		} catch (Exception $e) {
-			throw new ClientException("Can't DELETE a single resource on endpoint $url", $e->getCode(), $e);
+			throw new ClientException("Can't DELETE a single resource on endpoint $endpoint", $e->getCode(), $e);
 		}
 	}
 	
 	public function getFirst (HalClient\HalResource $resource) {
-		$this->fetchHatoasResources($resource, 'first');
+		$this->fetchPaginatedResources($resource, 'first');
 	}
 	public function getLast (HalClient\HalResource $resource) {
-		$this->fetchHatoasResources($resource, 'last');
+		$this->fetchPaginatedResources($resource, 'last');
 	}
 	public function getPrevious (HalClient\HalResource $resource) {
-		$this->fetchHatoasResources($resource, 'previous');
+		$this->fetchPaginatedResources($resource, 'previous');
 	}
 	public function getNext (HalClient\HalResource $resource) {
-		$this->fetchHatoasResources($resource, 'next');
+		$this->fetchPaginatedResources($resource, 'next');
 	}
 	
 	/**
+	 * Generic method to fetch in a HAL-paginated collection of resources
 	 *
-	 *
-	 * @param HalClient\HalResource $resource
-	 * @param string                $keyword
+	 * @param HalClient\HalResource $resource     Resource from which to fetch
+	 * @param string                $keyword      Keyword denoting what is to be fetched.
+	 *                             				  Possible values: ['first', 'last', 'previous', 'next']
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface|null
 	 * @throws ClientException
 	 */
-	private function fetchHatoasResources (HalClient\HalResource $resource, string $keyword) {
+	private function fetchPaginatedResources (HalClient\HalResource $resource, string $keyword) {
 		try {
 			if ($resource->hasLink($keyword)) {
 				return $this->client->get($resource->getFirstLink($keyword)->get());
@@ -222,7 +223,7 @@ class Client {
 				return null;
 			}
 		} catch (Exception $e) {
-			throw new ClientException('Error while browsing HATOAS resource.', $e->getCode(), $e);
+			throw new ClientException('Error while fetching HATEOAS resource.', $e->getCode(), $e);
 		}
 	}
 }
