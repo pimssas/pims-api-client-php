@@ -6,7 +6,7 @@ Pims PHP API client
   
 Simple PHP client for the Pims API ([documentation here](http://api.pims.io)).  
   
-    
+* [Requirement](#requirement)    
 * [Installation](#installation)
 * [Usage](#usage)
 * [License](#license)
