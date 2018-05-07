@@ -21,10 +21,10 @@ class PimsClientTest extends TestCase {
 		try {
 			$client = $this->initClient();
 		} catch (\Exception $e) {
-			$this->assertTrue(false, $e->getMessage());
+			self::assertTrue(false, $e->getMessage());
 		}
 
-		self::assertTrue(is_object($client), '__construct() OK');
+		self::assertTrue(is_object($client), 'Default __construct() OK');
 	}
 	
 	public function test__construct2 () {
@@ -36,10 +36,10 @@ class PimsClientTest extends TestCase {
 					'fr',
 					Client::DEFAULT_VERSION);
 		} catch (\Exception $e) {
-			$this->assertTrue(false, $e->getMessage());
+			self::assertTrue(false, $e->getMessage());
 		}
 		
-		self::assertTrue(is_object($client), '__construct() OK');
+		self::assertTrue(is_object($client), 'Complete __construct() OK');
 	}
 
 	public function testGetOne () {
@@ -48,10 +48,13 @@ class PimsClientTest extends TestCase {
 			
 			$data = $client->getOne(Endpoint::EVENTS, 2127);
 		} catch (\Exception $e) {
-			$this->assertTrue(false, $e->getMessage());
+			self::assertTrue(false, $e->getMessage());
 		}
-
-		self::assertTrue(is_object($data), 'getOne() OK');
+		
+		self::assertTrue(is_object($data));
+		self::assertAttributeCount(13, 'properties', $data);
+		self::assertAttributeCount(11, 'properties', $data->getFirstResource('venue'));
+		self::assertEquals('ALAN WILSON', mb_strtoupper($data->getProperty('label')));
 	}
 
 	public function testGetAll () {
@@ -60,7 +63,7 @@ class PimsClientTest extends TestCase {
 			
 			$data = $client->getAll(Endpoint::EVENTS);
 		} catch (\Exception $e) {
-			$this->assertTrue(false, $e->getMessage());
+			self::assertTrue(false, $e->getMessage());
 		}
 
 		self::assertTrue(is_object($data), 'getAll() OK');

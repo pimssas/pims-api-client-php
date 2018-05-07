@@ -49,15 +49,14 @@ class Client {
 	 */
 	public function __construct (string $basePath, string $username, string $password, string $language = self::DEFAULT_LANGUAGE, string $version = self::DEFAULT_VERSION) {
 		try {
-			$this->basePath = parse_url($basePath)['path'];
-			if (! empty($language)) {
-				$this->language = $language;
-			}
+			$this->basePath = $basePath;
 			if (! empty($version)) {
 				$this->version = $version;
 			}
 			
-			$this->client = (new HalClient\HalClient($this->getFullPath()))->withHeader('Authorization', 'Basic ' . base64_encode($username . ':' . $password));
+			$this->client = (new HalClient\HalClient($this->getFullPath()))
+					->withHeader('Authorization', 'Basic ' . base64_encode($username . ':' . $password))
+					->withHeader('Accept-Language', $language);
 		} catch (Exception $e) {
 			throw new ClientException("Can't create a new API Client", $e->getCode(), $e);
 		}
@@ -92,14 +91,13 @@ class Client {
 	 */
 	public function getOne (string $endpoint, int $id, array $params = null) {
 		try {
-			$this->substitutePathParameters($endpoint, $params);
+			$this->substitutePathParameters(
+					$params,
+					$endpoint);
 			
 			return $this->client->get(
 					$this->getFullPath() . $endpoint . '/' . $id,
-					[
-							'headers'	=> ['Accept-Language' => $this->language],
-							'query' 	=> $params
-					]);
+					['query' => $params]);
 		} catch (Exception $e) {
 			throw new ClientException("Can't GET a single resource on endpoint $endpoint", $e->getCode(), $e);
 		}
@@ -116,14 +114,13 @@ class Client {
 	 */
 	public function getAll (string $endpoint, array $params = null) {
 		try {
-			$this->substitutePathParameters($endpoint, $params);
+			$this->substitutePathParameters(
+					$params,
+					$endpoint);
 			
 			return $this->client->get(
 					$this->getFullPath() . $endpoint,
-					[
-							'headers'	=> ['Accept-Language' => $this->language],
-							'query' 	=> $params
-					]);
+					['query' => $params]);
 		} catch (Exception $e) {
 			throw new ClientException("Can't GET a collection of resources on endpoint $endpoint", $e->getCode(), $e);
 		}
@@ -140,7 +137,9 @@ class Client {
 	 */
 	public function postOne (string $endpoint, array $body) {
 		try {
-			$this->substitutePathParameters($endpoint, $params);
+			$this->substitutePathParameters(
+					$params,
+					$endpoint);
 			
 			return $this->client->post(
 					$this->getFullPath() . $endpoint,
@@ -162,7 +161,9 @@ class Client {
 	 */
 	public function patchOne (string $endpoint, int $id, array $body) {
 		try {
-			$this->substitutePathParameters($endpoint, $params);
+			$this->substitutePathParameters(
+					$params,
+					$endpoint);
 			
 			return $this->client->request(
 					'PATCH',
@@ -184,7 +185,9 @@ class Client {
 	 */
 	public function deleteOne (string $endpoint, int $id) {
 		try {
-			$this->substitutePathParameters($endpoint, $params);
+			$this->substitutePathParameters(
+					$params,
+					$endpoint);
 			
 			return $this->client->delete($this->getFullPath() . $endpoint . '/' . $id);
 		} catch (Exception $e) {
