@@ -20,7 +20,7 @@ class Client {
 	 *
 	 * @var string
 	 */
-	const DEFAULT_VERSION = 'v2';
+	const DEFAULT_VERSION = 'v1';
 	
 	var $basePath;
 	var $version;
