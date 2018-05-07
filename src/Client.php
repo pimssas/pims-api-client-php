@@ -7,99 +7,222 @@ use Jsor\HalClient;
 use Pims\Api\Exception\ClientException;
 
 class Client {
-
+	
+	/**
+	 * Default language of the API
+	 *
+	 * @var string
+	 */
+	const DEFAULT_LANGUAGE = 'en';
+	
+	/**
+	 * Default version of the API
+	 *
+	 * @var string
+	 */
+	const DEFAULT_VERSION = 'v2';
+	
 	var $basePath;
+	var $version;
+	private function getFullPath () : string {
+		return $this->basePath . (! empty($this->version) ? '/' . $this->version : '');
+	}
+	
+	/**
+	 * HAL client to request the API
+	 *
+	 * @var HalClient\HalClient|HalClient\HalClientInterface
+	 */
 	var $client;
-
-
+	
+	
 	/**
 	 * Client constructor.
 	 *
-	 * @param string	$url		Url of the root uri. (ex: http://api.opensupporter.org/)
-	 * @param string	$username	Username for the Basic Auth
-	 * @param string	$password	Password for the Basic Auth
-	 * @throws \Exception
+	 * @param string $basePath URL of the root URI (e.g.: https://demo.pims.io/api)
+	 * @param string $username Username for the Basic Auth
+	 * @param string $password Password for the Basic Auth
+	 * @param string $language Language of the translatable fields (e.g.: 'fr')
+	 * @param string $version  Version of the API (e.g.: 'v1')
+	 *
+	 * @throws ClientException
 	 */
-	public function __construct (string $url, string $username, string $password) {
-
-		$this->basePath = parse_url($url)['path'];
-
+	public function __construct (string $basePath, string $username, string $password, string $language = self::DEFAULT_LANGUAGE, string $version = self::DEFAULT_VERSION) {
 		try {
-			$this->client = (new HalClient\HalClient($url))->withHeader('Authorization', 'Basic ' . base64_encode($username . ':' . $password));
+			$this->basePath = parse_url($basePath)['path'];
+			if (! empty($language)) {
+				$this->language = $language;
+			}
+			if (! empty($version)) {
+				$this->version = $version;
+			}
+			
+			$this->client = (new HalClient\HalClient($this->getFullPath()))->withHeader('Authorization', 'Basic ' . base64_encode($username . ':' . $password));
 		} catch (Exception $e) {
-			throw new ClientException("bad construct", 42, $e);
+			throw new ClientException("Can't create a new API Client", $e->getCode(), $e);
 		}
 	}
-
+	
 	/**
-	 * Fonction permettant la récuperations d'une entité
+	 * If some $params begin with a semi-colon (e.g. ":event_id"), substitute them in the $url and remove them from $params
 	 *
-	 * @param string	$url	Url correspondant au point d'appel de récupération (ex: '/api/v1/people')
-	 * @param int		$id		Id de l'élément qu'il faut récupere (ex: '2127')
-	 * @param array		$params Parametre de filtre pour la récuperation de donnée (ex: TODO)
+	 * @param array		&$params
+	 * @param string	&$url
+	 */
+	private function substitutePathParameters (array &$params = null, string &$url) {
+		if (! empty($params)) {
+			foreach ($params as $key => $value) {
+				if ($key[0] === ':') {
+					$url = str_replace($key, $value, $url);
+					unset($params[$key]);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Get a single resource by ID
+	 *
+	 * @param string	$url	Enpoint of the resource to fetch (see \Pims\Api\Resource for the possible values)
+	 * @param int		$id		ID of the resource to fetch
+	 * @param array		$params Query parameters
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
 	 * @throws ClientException
 	 */
 	public function getOne (string $url, int $id, array $params = null) {
-
 		try {
-			return $this->client->get($this->basePath . $url . '/' . $id, ['query' => $params]);
+			$this->substitutePathParameters($url, $params);
+			
+			return $this->client->get(
+					$this->getFullPath() . $url . '/' . $id,
+					[
+							'headers'	=> ['Accept-Language' => $this->language],
+							'query' 	=> $params
+					]);
 		} catch (Exception $e) {
-			throw new ClientException("bad getOne", 42, $e);
+			throw new ClientException("Can't GET a single resource on endpoint $url", $e->getCode(), $e);
 		}
 	}
 
 	/**
-	 * Fonction permettant la récuperations d'une collection
+	 * Get a collection of resources
 	 *
-	 * @param string	$url
-	 * @param array		$params
+	 * @param string	$url	Enpoint of the resources to fetch (see \Pims\Api\Resource for the possible values)
+	 * @param array		$params Query parameters (mostly filters)
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
 	 * @throws ClientException
 	 */
 	public function getAll (string $url, array $params = null) {
 		try {
-			return $this->client->get($this->basePath . $url, ['query' => $params]);
+			$this->substitutePathParameters($url, $params);
+			
+			return $this->client->get(
+					$this->getFullPath() . $url,
+					[
+							'headers'	=> ['Accept-Language' => $this->language],
+							'query' 	=> $params
+					]);
 		} catch (Exception $e) {
-			throw new ClientException("bad getAll", 42, $e);
+			throw new ClientException("Can't GET a collection of resources on endpoint $url", $e->getCode(), $e);
 		}
 	}
-
+	
 	/**
-	 * Fonction permettant la suppresion d'une entite
+	 * Create a new resource
 	 *
-	 * @param string	$url	Url correspondant au point d'appel de suppression (ex: '/events')
-	 * @param int		$id		Id de l'élément qu'il faut supprimer (ex: '2127')
+	 * @param string	$url	Enpoint of the resource to create (see \Pims\Api\Resource for the possible values)
+	 * @param array		$body	Values to be created
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
 	 * @throws ClientException
 	 */
-	public function deleteOne (string $url, int $id) {
+	public function postOne (string $url, array $body) {
 		try {
-			return $this->client->delete($this->basePath . $url . '/' . $id);
+			$this->substitutePathParameters($url, $params);
+			
+			return $this->client->post(
+					$this->getFullPath() . $url,
+					['body' => $body]);
 		} catch (Exception $e) {
-			throw new ClientException("bad deleteOne", 42, $e);
+			throw new ClientException("Can't POST a single resource on endpoint $url", $e->getCode(), $e);
 		}
 	}
-
+	
 	/**
-	 * @param string	$url	Url correspondant au point d'appel de suppression (ex: '/events')
-	 * @param int		$id		Id de l'élément qu'il faut patché (ex: '2127')
-	 * @param array		$body
+	 * Update a single resource by ID
+	 *
+	 * @param string	$url	Enpoint of the resource to update (see \Pims\Api\Resource for the possible values)
+	 * @param int		$id		ID of the resource to update
+	 * @param array		$body	New values to be updated
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
 	 * @throws ClientException
 	 */
 	public function patchOne (string $url, int $id, array $body) {
 		try {
-			return $this->client
-				->request('PATCH', $this->basePath . $url . '/' . $id,
-					['body'    => $body]);
+			$this->substitutePathParameters($url, $params);
+			
+			return $this->client->request(
+					'PATCH',
+					$this->getFullPath() . $url . '/' . $id,
+					['body' => $body]);
 		} catch (Exception $e) {
-			throw new ClientException("bad patchOne", 42, $e);
+			throw new ClientException("Can't PATCH a single resource on endpoint $url", $e->getCode(), $e);
 		}
 	}
-
+	
+	/**
+	 * Delete a single resource by ID
+	 *
+	 * @param string	$url	Enpoint of the resource to delete (see \Pims\Api\Resource for the possible values)
+	 * @param int		$id		ID of the resource to delete
+	 *
+	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
+	 * @throws ClientException
+	 */
+	public function deleteOne (string $url, int $id) {
+		try {
+			$this->substitutePathParameters($url, $params);
+			
+			return $this->client->delete($this->getFullPath() . $url . '/' . $id);
+		} catch (Exception $e) {
+			throw new ClientException("Can't DELETE a single resource on endpoint $url", $e->getCode(), $e);
+		}
+	}
+	
+	public function getFirst (HalClient\HalResource $resource) {
+		$this->fetchHatoasResources($resource, 'first');
+	}
+	public function getLast (HalClient\HalResource $resource) {
+		$this->fetchHatoasResources($resource, 'last');
+	}
+	public function getPrevious (HalClient\HalResource $resource) {
+		$this->fetchHatoasResources($resource, 'previous');
+	}
+	public function getNext (HalClient\HalResource $resource) {
+		$this->fetchHatoasResources($resource, 'next');
+	}
+	
+	/**
+	 *
+	 *
+	 * @param HalClient\HalResource $resource
+	 * @param string                $keyword
+	 *
+	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface|null
+	 * @throws ClientException
+	 */
+	private function fetchHatoasResources (HalClient\HalResource $resource, string $keyword) {
+		try {
+			if ($resource->hasLink($keyword)) {
+				return $this->client->get($resource->getFirstLink($keyword)->get());
+			} else {
+				return null;
+			}
+		} catch (Exception $e) {
+			throw new ClientException('Error while browsing HATOAS resource.', $e->getCode(), $e);
+		}
+	}
 }

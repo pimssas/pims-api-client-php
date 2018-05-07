@@ -1,73 +1,111 @@
 
 [![Build Status](https://travis-ci.org/pimssas/pims-api-client-php.svg?branch=master)](https://travis-ci.org/pimssas/pims-api-client-php)  
   
-Pims Api Client  
+Pims PHP API client  
 =========================  
   
-Simple php client for Pims-Api ([Documentation](http://api.pims.io))  
+Simple PHP client for the Pims API ([documentation here](http://api.pims.io)).  
   
     
 * [Installation](#installation)
 * [Usage](#usage)
 * [License](#license)
 
+Requirement
+-----
+
+```json
+php >= 7.0
+```
+
+
 Installation
 -----
 
+Use [Composer](https://getcomposer.org/) to install. Simply add this line to your `composer.json` file:
+```json
+"require": {
+	"pimssas/pims-api-client-php": "dev-master"
+}
+```
+and then run:
 ```bash
-composer require pimssas/pims-api-client-php:"dev-master"
+$ composer update 
+```
+
+Or install directly from the command line:  
+```bash
+$ composer require pimssas/pims-api-client-php:"dev-master"
 ```
 
 
 Usage
 -----
 
-We will use [Pims-api](https://api.pims.io/) as an example API endpoint.
-
-  
-### Create the client
-
-At a first step, we setup a `Client` instance.
+First step, you have to create a `Client` instance.
 
 ```php
 use Pims\Api\Client;
 
 try {
-    $client = new Client('https://demo.pims.io/api/v1', 'user', 'password');
-} catch (\Exception $e) {
-    echo $e->getMessage();
-}
-
-```
-
-### Get One Events
-
-```php
-$client = new Client('https://demo.pims.io/api/v1', 'user', 'password'); 
- 
-try {  
-    $data = $client->getOne('/events', 2127);
+    // Minimal setup
+    $client = new Client(
+    	'https://demo.pims.io/api',
+    	'username',
+    	'password');
+    
+    // ... or full setup, with language and version
+    $client = new Client(
+    	'https://demo.pims.io/api',
+    	'username',
+    	'password',
+    	'fr',
+    	'v1');
 } catch (ClientException $e) {
     echo $e->getMessage();
 }
+
 ```
 
-### Get All Events
+Then you can call it on various endpoints, like this:
 ```php
-$client = new Client('https://demo.pims.io/api/v1', 'user', 'password'); 
- 
+use Pims\Api\Resource;
+
 try {
-    $data = $client->getAll('/events');
+    // Display the label of the event by ID 2127
+    $event = $client->getOne(
+    	Resource::EVENTS,
+    	2127);
+    echo $event['label'];
+    
+    // Get the 10 last promotions applied to the event by ID 2127
+    $promotions = $client->getAll(
+       	Resource::EVENTS_PROMOTIONS,
+       	[
+       		':event_id' => 2127,
+       		'sort'      => '-date', 
+       		'page_size' => 10
+       	]);
+    
+    // Get all events occuring in April 2018:
+    $results = $client->getAll(
+    	Resource::EVENTS,
+    	[
+    	    'from_date'	=> '2018-04-01',
+    	    'to_date' 	=> '2018-04-30'
+    	]);
+    $events = $results;
+    while ($results->hasLink('next')) {
+    	$results = $client->getNext($results);
+        $events = array_merge($events, $results);
+    }
+    
+    // Delete the venue by ID 234
+    $client->deleteOne(
+     	Resource::VENUES,
+       	234);
 } catch (ClientException $e) {
     echo $e->getMessage();
-}
-```
-
-If there is a second page with more documents, we can follow the `next` link.
-
-```php
-if ($data->hasLink('next')) {
-    $nextResource = $data->getFirstLink('next')->get();
 }
 ```
 

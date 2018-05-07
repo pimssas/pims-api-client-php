@@ -1,32 +1,31 @@
 {
     "name": "pimssas/pims-api-client-php",
-    "description": "Simple php client for Pims-Api",
+    "description": "Simple PHP client for the Pims API",
     "keywords": ["pims", "api-wrapper"],
     "license": "MIT",
     "authors": [
         {
-            "name": "Pims",
+            "name": "Pims SAS",
             "email": "support@pims.io"
         }
     ],
     "type": "project",
     "require": {
-        "jsor/hal-client": "^3.4",
         "php": ">=7.0",
-        "guzzlehttp/guzzle": "~5.0|~6.0"
+        "guzzlehttp/guzzle": "~5.0|~6.0",
+        "jsor/hal-client": "^3.4"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5"
     },
-	"autoload": {
-        "psr-4": {
-            "Pims\\Api\\": "src/"
-        }
+		"autoload": {
+				"psr-4": {
+        		"Pims\\Api\\": "src/"
+				}
     },
     "autoload-dev": {
         "psr-4": {
             "Pims\\Api\\": "tests/"
         }
-
     }
 }
