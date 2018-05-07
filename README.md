@@ -46,6 +46,7 @@ First step, you have to create a `Client` instance.
 
 ```php
 use Pims\Api\Client;
+use Pims\Api\Exception\ClientException;
 
 try {
     // Minimal setup

@@ -2,7 +2,7 @@
 
 namespace Pims\Api;
 
-interface Resource {
+abstract class Resource {
 	
 	const CATEGORIES = '/categories';
 	
