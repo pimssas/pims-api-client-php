@@ -83,9 +83,9 @@ try {
     $promotions = $client->getAll(
        	Endpoint::EVENTS_PROMOTIONS,
        	[
-       		':event_id' => 2127,
-       		'sort'      => '-date', 
-       		'page_size' => 10
+       	    ':event_id' => 2127,
+       	    'sort'      => '-date', 
+       	    'page_size' => 10
        	]);
     
     // Get all events occuring in April 2018:
