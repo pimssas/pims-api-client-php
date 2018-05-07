@@ -46,11 +46,24 @@ class PimsClientTest extends TestCase {
 		try {
 			$client = $this->initClient();
 			
-			$data = $client->getOne(Endpoint::EVENTS, 2127);
+			$data = $client->getOne(
+					Endpoint::EVENTS,
+					2127);
 		} catch (\Exception $e) {
 			self::assertTrue(false, $e->getMessage());
 		}
 		
+		$results = $client->getAll(
+				Endpoint::EVENTS,
+				[
+						'from_date'	=> '2018-04-01',
+						'to_date' 	=> '2018-04-30'
+				]);
+		$events = $results->getResource('events');
+		while ($results->hasLink('next')) {
+			$results = $client->getNext($results);
+			$events = array_merge($events, $results->getResource('events'));
+		}
 		self::assertTrue(is_object($data));
 		self::assertAttributeCount(13, 'properties', $data);
 		self::assertAttributeCount(11, 'properties', $data->getFirstResource('venue'));

@@ -196,16 +196,16 @@ class Client {
 	}
 	
 	public function getFirst (HalClient\HalResource $resource) {
-		$this->fetchPaginatedResources($resource, 'first');
+		return $this->fetchPaginatedResources($resource, 'first');
 	}
 	public function getLast (HalClient\HalResource $resource) {
-		$this->fetchPaginatedResources($resource, 'last');
+		return $this->fetchPaginatedResources($resource, 'last');
 	}
 	public function getPrevious (HalClient\HalResource $resource) {
-		$this->fetchPaginatedResources($resource, 'previous');
+		return $this->fetchPaginatedResources($resource, 'previous');
 	}
 	public function getNext (HalClient\HalResource $resource) {
-		$this->fetchPaginatedResources($resource, 'next');
+		return $this->fetchPaginatedResources($resource, 'next');
 	}
 	
 	/**
@@ -221,7 +221,7 @@ class Client {
 	private function fetchPaginatedResources (HalClient\HalResource $resource, string $keyword) {
 		try {
 			if ($resource->hasLink($keyword)) {
-				return $this->client->get($resource->getFirstLink($keyword)->get());
+				return $this->client->get($resource->getFirstLink($keyword)->getHref());
 			} else {
 				return null;
 			}

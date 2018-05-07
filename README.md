@@ -77,7 +77,7 @@ try {
     $event = $client->getOne(
     	Endpoint::EVENTS,
     	2127);
-    echo $event['label'];
+    echo $event->getProperty('label');
     
     // Get the 10 last promotions applied to the event by ID 2127
     $promotions = $client->getAll(
@@ -95,10 +95,10 @@ try {
     	    'from_date'	=> '2018-04-01',
     	    'to_date' 	=> '2018-04-30'
     	]);
-    $events = $results;
+    $events = $results->getResource('events');
     while ($results->hasLink('next')) {
     	$results = $client->getNext($results);
-        $events = array_merge($events, $results);
+        $events = array_merge($events, $results->getResource('events'));
     }
     
     // Delete the venue by ID 234
