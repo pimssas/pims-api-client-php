@@ -22,8 +22,15 @@ class Client {
 	 */
 	const DEFAULT_VERSION = 'v1';
 	
-	var $basePath;
-	var $version;
+	private $basePath;
+	private $version;
+	
+	public function getVersion () : string {
+		return $this->version;
+	}
+	public function setVersion (string $version) {
+		$this->version = $version;
+	}
 	private function getFullPath () : string {
 		return $this->basePath . (! empty($this->version) ? '/' . $this->version : '');
 	}
@@ -33,7 +40,12 @@ class Client {
 	 *
 	 * @var HalClient\HalClient|HalClient\HalClientInterface
 	 */
-	var $client;
+	
+	private $halClient;
+	
+	public function getHalClient () : \Jsor\HalClient\HalClient {
+		return $this->halClient;
+	}
 	
 	
 	/**
@@ -54,12 +66,19 @@ class Client {
 				$this->version = $version;
 			}
 			
-			$this->client = (new HalClient\HalClient($this->getFullPath()))
-					->withHeader('Authorization', 'Basic ' . base64_encode($username . ':' . $password))
-					->withHeader('Accept-Language', $language);
+			$this->halClient = (new HalClient\HalClient($this->getFullPath()))
+					->withHeader('Authorization', 'Basic ' . base64_encode($username . ':' . $password));
+			$this->setLanguage($language);
 		} catch (Exception $e) {
 			throw new ClientException("Can't create a new API Client", $e->getCode(), $e);
 		}
+	}
+	
+	/**
+	 * @param string $language
+	 */
+	public function setLanguage (string $language) {
+		$this->halClient = $this->halClient->withHeader('Accept-Language', $language);
 	}
 	
 	/**
@@ -95,7 +114,7 @@ class Client {
 					$params,
 					$endpoint);
 			
-			return $this->client->get(
+			return $this->halClient->get(
 					$this->getFullPath() . $endpoint . '/' . $id,
 					['query' => $params]);
 		} catch (Exception $e) {
@@ -118,7 +137,7 @@ class Client {
 					$params,
 					$endpoint);
 			
-			return $this->client->get(
+			return $this->halClient->get(
 					$this->getFullPath() . $endpoint,
 					['query' => $params]);
 		} catch (Exception $e) {
@@ -141,7 +160,7 @@ class Client {
 					$params,
 					$endpoint);
 			
-			return $this->client->post(
+			return $this->halClient->post(
 					$this->getFullPath() . $endpoint,
 					['body' => $body]);
 		} catch (Exception $e) {
@@ -165,7 +184,7 @@ class Client {
 					$params,
 					$endpoint);
 			
-			return $this->client->request(
+			return $this->halClient->request(
 					'PATCH',
 					$this->getFullPath() . $endpoint . '/' . $id,
 					['body' => $body]);
@@ -189,7 +208,7 @@ class Client {
 					$params,
 					$endpoint);
 			
-			return $this->client->delete($this->getFullPath() . $endpoint . '/' . $id);
+			return $this->halClient->delete($this->getFullPath() . $endpoint . '/' . $id);
 		} catch (Exception $e) {
 			throw new ClientException("Can't DELETE a single resource on endpoint $endpoint", $e->getCode(), $e);
 		}
@@ -221,7 +240,7 @@ class Client {
 	private function fetchPaginatedResources (HalClient\HalResource $resource, string $keyword) {
 		try {
 			if ($resource->hasLink($keyword)) {
-				return $this->client->get($resource->getFirstLink($keyword)->getHref());
+				return $this->halClient->get($resource->getFirstLink($keyword)->getHref());
 			} else {
 				return null;
 			}

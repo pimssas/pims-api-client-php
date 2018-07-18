@@ -7,67 +7,130 @@ use Pims\Api\Endpoint;
 class PimsClientTest extends TestCase {
 	
 	/**
+	 * Initialize the client
+	 *
 	 * @return Client
-	 * @throws \Pims\Api\Exception\ClientException
 	 */
-	private function initClient () {
-		return new Client(
-				'https://demo.pims.io/api',
-				getenv('PIMS_API_USER'),
-				getenv('PIMS_API_PASSWORD'));
-	}
-	
-	public function test__construct () {
+	public function initClient () : Pims\Api\Client {
 		try {
-			$client = $this->initClient();
+			return new Client(
+					'http://demo.pims.localhost/api',
+					getenv('PIMS_API_USER'),
+					getenv('PIMS_API_PASSWORD'));
 		} catch (\Exception $e) {
-			self::assertTrue(false, $e->getMessage());
+			self::assertFalse(false, $e->getMessage());
 		}
-
-		self::assertTrue(is_object($client), 'Default __construct() OK');
 	}
 	
-	public function test__construct2 () {
+	/**
+	 * Basic test on constructor
+	 */
+	public function testConstructBase () {
+		$client = $this->initClient();
+		
+		self::assertInstanceOf(
+				'Pims\Api\Client',
+				$client,
+				'Failed first constructor test');
+	}
+	
+	/**
+	 * Extended test on constructor
+	 */
+	public function testConstructExtended () {
 		try {
 			$client = new Client(
-					'https://demo.pims.io/api',
+					'http://demo.pims.localhost/api',
 					getenv('PIMS_API_USER'),
 					getenv('PIMS_API_PASSWORD'),
-					'fr',
 					Client::DEFAULT_VERSION);
 		} catch (\Exception $e) {
-			self::assertTrue(false, $e->getMessage());
+			self::assertFalse(false, $e->getMessage());
 		}
 		
-		self::assertTrue(is_object($client), 'Complete __construct() OK');
+		self::assertInstanceOf(
+				'Pims\Api\Client',
+				$client,
+				'Failed second constructor test ');
 	}
-
-	public function testGetOne () {
+	
+	/**
+	 * Test of the method setVersion
+	 */
+	public function testSetVersion () {
+		$version = 'v' . uniqId();
 		try {
 			$client = $this->initClient();
-			
-			$data = $client->getOne(
+			$client->setVersion($version);
+		} catch (\Exception $e) {
+			self::assertFalse(false, $e->getMessage());
+		}
+		
+		self::assertSame(
+				$version,
+				$client->getVersion(),
+				'Failed of the method setVersion');
+	}
+	
+	/**
+	 * Test of the method setLanguage
+	 */
+	public function testSetLanguage () {
+		$language = 'fr';
+		try {
+			$client = $this->initClient();
+			$client->setLanguage($language);
+		} catch (\Exception $e) {
+			self::assertFalse(false, $e->getMessage());
+		}
+		
+		self::assertSame(
+				$language,
+				$client->getHalClient()->getDefaultRequest()->getHeader('Accept-Language')[0],
+				'Failed of the method setLanguage');
+	}
+	
+	/**
+	 * Test of the method GetOne
+	 */
+	public function testGetOne () {
+		try {
+			$data = $this->initClient()->getOne(
 					Endpoint::EVENTS,
 					2127);
 		} catch (\Exception $e) {
-			self::assertTrue(false, $e->getMessage());
+			self::assertFalse(false, $e->getMessage());
 		}
 		
-		self::assertTrue(is_object($data));
-		self::assertAttributeCount(13, 'properties', $data);
-		self::assertAttributeCount(11, 'properties', $data->getFirstResource('venue'));
-		self::assertEquals('ALAN WILSON', mb_strtoupper($data->getProperty('label')));
+		self::assertInstanceOf(
+				'Jsor\HalClient\HalResource',
+				$data,
+				'Failed of the method getOne');
+		self::assertAttributeCount(
+				15,
+				'properties',
+				$data);
+		self::assertAttributeCount(
+				11,
+				'properties',
+				$data->getFirstResource('venue'));
+		self::assertSame(
+				'ALAN WILSON',
+				mb_strtoupper($data->getProperty('label')));
 	}
-
+	
+	/**
+	 * Test of the method GetAll
+	 */
 	public function testGetAll () {
 		try {
-			$client = $this->initClient();
-			
-			$data = $client->getAll(Endpoint::EVENTS);
+			$data = $this->initClient()->getAll(Endpoint::EVENTS);
 		} catch (\Exception $e) {
-			self::assertTrue(false, $e->getMessage());
+			self::assertFalse(false, $e->getMessage());
 		}
-
-		self::assertTrue(is_object($data), 'getAll() OK');
+		self::assertInstanceOf(
+				'Jsor\HalClient\HalResource',
+				$data,
+				'Failed of the method getAll');
 	}
 }
