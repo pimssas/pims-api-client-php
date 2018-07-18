@@ -85,7 +85,7 @@ class Client {
 	/**
 	 * @param string $language
 	 */
-	public function setLanguage (string $language) {
+	public function setLanguage (string $language = self::DEFAULT_LANGUAGE) {
 		$this->halClient = $this->halClient->withHeader('Accept-Language', $language);
 	}
 	
