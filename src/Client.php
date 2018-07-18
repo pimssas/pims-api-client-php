@@ -22,15 +22,25 @@ class Client {
 	 */
 	const DEFAULT_VERSION = 'v1';
 	
-	private $basePath;
+	/**
+	 * Current version of the API
+	 *
+	 * @var string
+	 */
 	private $version;
-	
 	public function getVersion () : string {
 		return $this->version;
 	}
 	public function setVersion (string $version) {
 		$this->version = $version;
 	}
+	
+	/**
+	 * Base path (and full path, i.e. including $version) of the API
+	 *
+	 * @var string
+	 */
+	private $basePath;
 	private function getFullPath () : string {
 		return $this->basePath . (! empty($this->version) ? '/' . $this->version : '');
 	}
@@ -40,9 +50,7 @@ class Client {
 	 *
 	 * @var HalClient\HalClient|HalClient\HalClientInterface
 	 */
-	
 	private $halClient;
-	
 	public function getHalClient () : \Jsor\HalClient\HalClient {
 		return $this->halClient;
 	}
