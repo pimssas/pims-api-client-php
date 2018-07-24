@@ -2,7 +2,13 @@
 
 namespace Pims\Api;
 
+/**
+ * List all endpoints that can be called via the API
+ *
+ * @package Pims\Api
+ */
 interface Endpoint {
+	const BINDINGS = '/bindings';
 	
 	const CATEGORIES = '/categories';
 	
@@ -23,6 +29,8 @@ interface Endpoint {
 	const SERIES 			= '/series';
 	const SERIES_EVENTS		= '/series/:series_id/events';
 	const SERIES_PROMOTIONS	= '/series/:series_id/promotions';
+	
+	const SUBSIDIARIES = '/subsidiaries';
 	
 	const VENUES 		= '/venues';
 	const VENUES_EVENTS	= '/venues/:venue_id/events';
