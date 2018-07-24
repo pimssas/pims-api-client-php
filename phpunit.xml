@@ -1,9 +1,7 @@
-<phpunit 	bootstrap="vendor/autoload.php"			
-			colors="true"
-			convertErrorsToExceptions="true"
-			convertNoticesToExceptions="true"
-			convertWarningsToExceptions="true"
-			stopOnFailure="true">
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+		colors="true"
+		bootstrap="./vendor/autoload.php">
 	<testsuites>
 		<testsuite name="Unit Tests">
 			<directory>./tests/</directory>
