@@ -14,7 +14,7 @@ class PimsClientTest extends TestCase {
 	public function initClient () : Pims\Api\Client {
 		try {
 			return new Client(
-					'http://demo.pims.localhost/api',
+					getenv('PIMS_API_PATH'),
 					getenv('PIMS_API_USER'),
 					getenv('PIMS_API_PASSWORD'));
 		} catch (\Exception $e) {
@@ -40,7 +40,7 @@ class PimsClientTest extends TestCase {
 	public function testConstructExtended () {
 		try {
 			$client = new Client(
-					'http://demo.pims.localhost/api',
+					getenv('PIMS_API_PATH'),
 					getenv('PIMS_API_USER'),
 					getenv('PIMS_API_PASSWORD'),
 					Client::DEFAULT_VERSION);
