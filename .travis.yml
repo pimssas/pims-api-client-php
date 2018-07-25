@@ -16,4 +16,8 @@ script:
   - ./vendor/bin/phpunit --coverage-clover=coverage.xml
 
 notifications:
-  email: false
+  email:
+      recipients:
+        - support@pims.io
+      on_success: never # default: change
+      on_failure: always # default: always

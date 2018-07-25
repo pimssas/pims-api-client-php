@@ -18,7 +18,7 @@ class PimsClientTest extends TestCase {
 					getenv('PIMS_API_USER'),
 					getenv('PIMS_API_PASSWORD'));
 		} catch (\Exception $e) {
-			self::assertFalse(false, $e->getMessage());
+			self::assertTrue(false, $e->getMessage());
 		}
 	}
 	
@@ -45,7 +45,7 @@ class PimsClientTest extends TestCase {
 					getenv('PIMS_API_PASSWORD'),
 					Client::DEFAULT_VERSION);
 		} catch (\Exception $e) {
-			self::assertFalse(false, $e->getMessage());
+			self::assertTrue(false, $e->getMessage());
 		}
 		
 		self::assertInstanceOf(
@@ -63,7 +63,7 @@ class PimsClientTest extends TestCase {
 			$client = $this->initClient();
 			$client->setVersion($version);
 		} catch (\Exception $e) {
-			self::assertFalse(false, $e->getMessage());
+			self::assertTrue(false, $e->getMessage());
 		}
 		
 		self::assertSame(
@@ -81,12 +81,12 @@ class PimsClientTest extends TestCase {
 			$client = $this->initClient();
 			$client->setLanguage($language);
 		} catch (\Exception $e) {
-			self::assertFalse(false, $e->getMessage());
+			self::assertTrue(false, $e->getMessage());
 		}
 		
 		self::assertSame(
 				$language,
-				$client->getHalClient()->getDefaultRequest()->getHeader('Accept-Language')[0],
+				$client->getHalClient()->getHeader('Accept-Language')[0],
 				'Failed of the method setLanguage');
 	}
 	
@@ -99,7 +99,7 @@ class PimsClientTest extends TestCase {
 					Endpoint::EVENTS,
 					2127);
 		} catch (\Exception $e) {
-			self::assertFalse(false, $e->getMessage());
+			self::assertTrue(false, $e->getMessage());
 		}
 		
 		self::assertInstanceOf(
@@ -126,7 +126,7 @@ class PimsClientTest extends TestCase {
 		try {
 			$data = $this->initClient()->getAll(Endpoint::EVENTS);
 		} catch (\Exception $e) {
-			self::assertFalse(false, $e->getMessage());
+			self::assertTrue(false, $e->getMessage());
 		}
 		self::assertInstanceOf(
 				'Jsor\HalClient\HalResource',
