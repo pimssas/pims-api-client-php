@@ -9,6 +9,7 @@ namespace Pims\Api;
  */
 interface Endpoint {
 	const BINDINGS = '/bindings';
+	const BINDINGS_STATES = '/bindings/:binding_id/states';
 	
 	const CATEGORIES = '/categories';
 	
