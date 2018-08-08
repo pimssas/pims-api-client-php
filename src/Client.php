@@ -158,11 +158,12 @@ class Client {
 	 *
 	 * @param string $endpoint Endpoint of the resource to create (see \Pims\Api\Resource for the possible values)
 	 * @param array  $body     Values to be created
+	 * @param array  $params   Query parameters (mostly the endpoint to substitute)
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
 	 * @throws ClientException
 	 */
-	public function postOne (string $endpoint, array $body) {
+	public function postOne (string $endpoint, array $body, array $params = null) {
 		try {
 			$this->substitutePathParameters(
 					$params,
