@@ -48,10 +48,10 @@ class Client {
 	/**
 	 * HAL client to request the API
 	 *
-	 * @var HalClient\HalClient|HalClient\HalClientInterface
+	 * @var HalClient\HalClientInterface
 	 */
 	private $halClient;
-	public function getHalClient () : \Jsor\HalClient\HalClient {
+	public function getHalClient () : HalClient\HalClientInterface {
 		return $this->halClient;
 	}
 	
@@ -92,10 +92,10 @@ class Client {
 	/**
 	 * If some $params begin with a semi-colon (e.g. ":event_id"), substitute them in the $endpoint and remove them from $params
 	 *
-	 * @param array		&$params
-	 * @param string	&$endpoint
+	 * @param array	 &$params
+	 * @param string &$endpoint
 	 */
-	private function substitutePathParameters (array &$params = null, string &$endpoint) {
+	private static function substitutePathParameters (array &$params = null, string &$endpoint) {
 		if (! empty($params)) {
 			foreach ($params as $key => $value) {
 				if ($key[0] === ':') {
@@ -118,7 +118,7 @@ class Client {
 	 */
 	public function getOne (string $endpoint, int $id, array $params = null) {
 		try {
-			$this->substitutePathParameters(
+			self::substitutePathParameters(
 					$params,
 					$endpoint);
 			
@@ -141,7 +141,7 @@ class Client {
 	 */
 	public function getAll (string $endpoint, array $params = null) {
 		try {
-			$this->substitutePathParameters(
+			self::substitutePathParameters(
 					$params,
 					$endpoint);
 			
@@ -165,7 +165,7 @@ class Client {
 	 */
 	public function postOne (string $endpoint, array $body, array $params = null) {
 		try {
-			$this->substitutePathParameters(
+			self::substitutePathParameters(
 					$params,
 					$endpoint);
 			
@@ -189,7 +189,7 @@ class Client {
 	 */
 	public function patchOne (string $endpoint, int $id, array $body) {
 		try {
-			$this->substitutePathParameters(
+			self::substitutePathParameters(
 					$params,
 					$endpoint);
 			
@@ -213,7 +213,7 @@ class Client {
 	 */
 	public function deleteOne (string $endpoint, int $id) {
 		try {
-			$this->substitutePathParameters(
+			self::substitutePathParameters(
 					$params,
 					$endpoint);
 			
