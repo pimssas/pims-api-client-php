@@ -35,4 +35,5 @@ interface Endpoint {
 	
 	const VENUES 		= '/venues';
 	const VENUES_EVENTS	= '/venues/:venue_id/events';
+	const GENRES 		= '/genres';
 }
