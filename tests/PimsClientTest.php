@@ -11,7 +11,7 @@ class PimsClientTest extends TestCase {
 	 *
 	 * @return Client
 	 */
-	public function initClient () : Pims\Api\Client {
+	private static function initClient () : Pims\Api\Client {
 		try {
 			return new Client(
 					getenv('PIMS_API_PATH'),
@@ -25,19 +25,19 @@ class PimsClientTest extends TestCase {
 	/**
 	 * Basic test on constructor
 	 */
-	public function testConstructBase () {
-		$client = $this->initClient();
+	public function testConstructorBasic () {
+		$client = self::initClient();
 		
 		self::assertInstanceOf(
 				'Pims\Api\Client',
 				$client,
-				'Failed first constructor test');
+				'Failed basic constructor test');
 	}
 	
 	/**
 	 * Extended test on constructor
 	 */
-	public function testConstructExtended () {
+	public function testConstructorExtended () {
 		try {
 			$client = new Client(
 					getenv('PIMS_API_PATH'),
@@ -51,16 +51,20 @@ class PimsClientTest extends TestCase {
 		self::assertInstanceOf(
 				'Pims\Api\Client',
 				$client,
-				'Failed second constructor test ');
+				'Failed extended constructor test');
+		self::assertSame(
+				Client::DEFAULT_VERSION,
+				$client->getVersion(),
+				'Failed extended constructor test');
 	}
 	
 	/**
-	 * Test of the method setVersion
+	 * Test for the method setVersion()
 	 */
 	public function testSetVersion () {
 		$version = 'v' . uniqId();
 		try {
-			$client = $this->initClient();
+			$client = self::initClient();
 			$client->setVersion($version);
 		} catch (\Exception $e) {
 			self::assertTrue(false, $e->getMessage());
@@ -73,12 +77,12 @@ class PimsClientTest extends TestCase {
 	}
 	
 	/**
-	 * Test of the method setLanguage
+	 * Test for the method setLanguage()
 	 */
 	public function testSetLanguage () {
 		$language = 'fr';
 		try {
-			$client = $this->initClient();
+			$client = self::initClient();
 			$client->setLanguage($language);
 		} catch (\Exception $e) {
 			self::assertTrue(false, $e->getMessage());
@@ -91,11 +95,11 @@ class PimsClientTest extends TestCase {
 	}
 	
 	/**
-	 * Test of the method GetOne
+	 * Test for the method getOne()
 	 */
 	public function testGetOne () {
 		try {
-			$data = $this->initClient()->getOne(
+			$data = self::initClient()->getOne(
 					Endpoint::EVENTS,
 					2127);
 		} catch (\Exception $e) {
@@ -120,7 +124,7 @@ class PimsClientTest extends TestCase {
 	}
 	
 	/**
-	 * Test of the method GetAll
+	 * Test for the method getAll()
 	 */
 	public function testGetAll () {
 		try {
@@ -128,6 +132,7 @@ class PimsClientTest extends TestCase {
 		} catch (\Exception $e) {
 			self::assertTrue(false, $e->getMessage());
 		}
+		
 		self::assertInstanceOf(
 				'Jsor\HalClient\HalResource',
 				$data,

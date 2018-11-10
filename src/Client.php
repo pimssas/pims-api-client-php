@@ -78,7 +78,7 @@ class Client {
 					->withHeader('Authorization', 'Basic ' . base64_encode($username . ':' . $password));
 			$this->setLanguage($language);
 		} catch (Exception $e) {
-			throw new ClientException("Can't create a new API Client", $e->getCode(), $e);
+			throw new ClientException("Can't create a new API client", $e->getCode(), $e);
 		}
 	}
 	
@@ -109,9 +109,9 @@ class Client {
 	/**
 	 * Get a single resource by ID
 	 *
-	 * @param string $endpoint Endpoint of the resource to fetch (see \Pims\Api\Resource for the possible values)
+	 * @param string $endpoint Endpoint of the resource to fetch (see \Pims\Api\Endpoint for the possible values)
 	 * @param int    $id       ID of the resource to fetch
-	 * @param array  $params   Query parameters
+	 * @param array  $params   Query parameters if any
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
 	 * @throws ClientException
@@ -133,8 +133,8 @@ class Client {
 	/**
 	 * Get a collection of resources
 	 *
-	 * @param string $endpoint Endpoint of the resources to fetch (see \Pims\Api\Resource for the possible values)
-	 * @param array  $params   Query parameters (mostly filters)
+	 * @param string $endpoint Endpoint of the resources to fetch (see \Pims\Api\Endpoint for the possible values)
+	 * @param array  $params   Query parameters if any
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
 	 * @throws ClientException
@@ -156,9 +156,9 @@ class Client {
 	/**
 	 * Create a new resource
 	 *
-	 * @param string $endpoint Endpoint of the resource to create (see \Pims\Api\Resource for the possible values)
+	 * @param string $endpoint Endpoint of the resource to create (see \Pims\Api\Endpoint for the possible values)
 	 * @param array  $body     Values to be created
-	 * @param array  $params   Query parameters (mostly the endpoint to substitute)
+	 * @param array  $params   Query parameters if any
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
 	 * @throws ClientException
@@ -180,7 +180,7 @@ class Client {
 	/**
 	 * Update a single resource by ID
 	 *
-	 * @param string $endpoint Endpoint of the resource to update (see \Pims\Api\Resource for the possible values)
+	 * @param string $endpoint Endpoint of the resource to update (see \Pims\Api\Endpoint for the possible values)
 	 * @param int    $id       ID of the resource to update
 	 * @param array  $body     New values to be updated
 	 *
@@ -205,7 +205,7 @@ class Client {
 	/**
 	 * Delete a single resource by ID
 	 *
-	 * @param string $endpoint Endpoint of the resource to delete (see \Pims\Api\Resource for the possible values)
+	 * @param string $endpoint Endpoint of the resource to delete (see \Pims\Api\Endpoint for the possible values)
 	 * @param int    $id       ID of the resource to delete
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
