@@ -29,14 +29,12 @@ interface Endpoint {
 	
 	const PROMOTIONS = '/promotions';
 	
-	const SERIES 			= '/series';
-	const SERIES_EVENTS		= '/series/:series_id/events';
+	const SERIES			= '/series';
 	const SERIES_PROMOTIONS	= '/series/:series_id/promotions';
 	
 	const STREAMS_GROUPS = '/streams-groups';
 	
 	const SUBSIDIARIES = '/subsidiaries';
 	
-	const VENUES 		= '/venues';
-	const VENUES_EVENTS	= '/venues/:venue_id/events';
+	const VENUES = '/venues';
 }
