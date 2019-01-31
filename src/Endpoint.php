@@ -10,6 +10,7 @@ namespace Pims\Api;
 interface Endpoint {
 	const BINDINGS			= '/bindings';
 	const BINDINGS_STATES	= '/bindings/:binding_id/states';
+	const BINDINGS_LOGS		= '/bindings/:binding_id/logs';
 	
 	const CATEGORIES = '/categories';
 	
