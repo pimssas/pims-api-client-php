@@ -126,7 +126,10 @@ class Client {
 					$this->getFullPath() . $endpoint . '/' . $id,
 					['query' => $params]);
 		} catch (Exception $e) {
-			throw new ClientException("Can't GET a single resource on endpoint $endpoint", $e->getCode(), $e);
+			throw new ClientException(
+					$e->getMessage(),
+					$e->getCode(),
+					$e);
 		}
 	}
 
@@ -149,7 +152,10 @@ class Client {
 					$this->getFullPath() . $endpoint,
 					['query' => $params]);
 		} catch (Exception $e) {
-			throw new ClientException("Can't GET a collection of resources on endpoint $endpoint", $e->getCode(), $e);
+			throw new ClientException(
+					$e->getMessage(),
+					$e->getCode(),
+					$e);
 		}
 	}
 	
@@ -173,7 +179,10 @@ class Client {
 					$this->getFullPath() . $endpoint,
 					['body' => $body]);
 		} catch (Exception $e) {
-			throw new ClientException("Can't POST a single resource on endpoint $endpoint", $e->getCode(), $e);
+			throw new ClientException(
+					$e->getMessage(),
+					$e->getCode(),
+					$e);
 		}
 	}
 	
@@ -198,7 +207,10 @@ class Client {
 					$this->getFullPath() . $endpoint . '/' . $id,
 					['body' => $body]);
 		} catch (Exception $e) {
-			throw new ClientException("Can't PATCH a single resource on endpoint $endpoint", $e->getCode(), $e);
+			throw new ClientException(
+					$e->getMessage(),
+					$e->getCode(),
+					$e);
 		}
 	}
 	
@@ -219,7 +231,10 @@ class Client {
 			
 			return $this->halClient->delete($this->getFullPath() . $endpoint . '/' . $id);
 		} catch (Exception $e) {
-			throw new ClientException("Can't DELETE a single resource on endpoint $endpoint", $e->getCode(), $e);
+			throw new ClientException(
+					$e->getMessage(),
+					$e->getCode(),
+					$e);
 		}
 	}
 	
