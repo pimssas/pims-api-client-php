@@ -25,11 +25,15 @@ interface Endpoint {
 	
 	const GENRES = '/genres';
 	
+	const IMPORTS = '/imports';
+	
 	const PRICERANGES = '/price-ranges';
 	
 	const PROMOTIONS = '/promotions';
 	
 	const SERIES = '/series';
+	
+	const STREAMS = '/streams';
 	
 	const STREAMS_GROUPS = '/streams-groups';
 	
