@@ -192,11 +192,12 @@ class Client {
 	 * @param string $endpoint Endpoint of the resource to update (see \Pims\Api\Endpoint for the possible values)
 	 * @param int    $id       ID of the resource to update
 	 * @param array  $body     New values to be updated
+	 * @param array  $params   Query parameters if any
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
 	 * @throws ClientException
 	 */
-	public function patchOne (string $endpoint, int $id, array $body) {
+	public function patchOne (string $endpoint, int $id, array $body, array $params = null) {
 		try {
 			self::substitutePathParameters(
 					$params,
