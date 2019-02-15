@@ -33,7 +33,8 @@ interface Endpoint {
 	
 	const SERIES = '/series';
 	
-	const STREAMS = '/streams';
+	const STREAMS		= '/streams';
+	const STREAM_TYPES	= '/stream-types';
 	
 	const STREAMS_GROUPS = '/streams-groups';
 	
