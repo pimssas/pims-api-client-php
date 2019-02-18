@@ -29,7 +29,8 @@ interface Endpoint {
 	
 	const PRICERANGES = '/price-ranges';
 	
-	const PROMOTIONS = '/promotions';
+	const PROMOTIONS		= '/promotions';
+	const PROMOTION_TYPES	= '/promotion-types';
 	
 	const SERIES = '/series';
 	
