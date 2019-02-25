@@ -30,8 +30,9 @@ interface Endpoint {
 	
 	const PRICERANGES = '/price-ranges';
 	
-	const PROMOTIONS		= '/promotions';
-	const PROMOTION_TYPES	= '/promotion-types';
+	const PROMOTIONS				= '/promotions';
+	const PROMOTIONS_ALLOCATIONS	= '/promotions/:promotion_id/allocations';
+	const PROMOTION_TYPES			= '/promotion-types';
 	
 	const SERIES		= '/series';
 	const SERIES_TYPES	= '/series-types';
@@ -44,6 +45,7 @@ interface Endpoint {
 	const SUBSIDIARIES = '/subsidiaries';
 	
 	const VENUES		= '/venues';
+	const VENUES_LABELS	= '/venues/:venue_id/labels';
 	const VENUE_TYPES	= '/venue-types';
 	
 	// Multi-linked types
