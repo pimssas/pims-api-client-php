@@ -111,7 +111,7 @@ class Client {
 	 *
 	 * @param string $endpoint Endpoint of the resource to fetch (see \Pims\Api\Endpoint for the possible values)
 	 * @param int    $id       ID of the resource to fetch
-	 * @param array  $params   Query parameters if any
+	 * @param array  $params   Query and/or path parameters if any
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
 	 * @throws ClientException
@@ -137,7 +137,7 @@ class Client {
 	 * Get a collection of resources
 	 *
 	 * @param string $endpoint Endpoint of the resources to fetch (see \Pims\Api\Endpoint for the possible values)
-	 * @param array  $params   Query parameters if any
+	 * @param array  $params   Query and/or path parameters if any
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
 	 * @throws ClientException
@@ -164,7 +164,7 @@ class Client {
 	 *
 	 * @param string $endpoint Endpoint of the resource to create (see \Pims\Api\Endpoint for the possible values)
 	 * @param array  $body     Values to be created
-	 * @param array  $params   Query parameters if any
+	 * @param array  $params   Path parameters if any
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
 	 * @throws ClientException
@@ -192,7 +192,7 @@ class Client {
 	 * @param string $endpoint Endpoint of the resource to update (see \Pims\Api\Endpoint for the possible values)
 	 * @param int    $id       ID of the resource to update
 	 * @param array  $body     New values to be updated
-	 * @param array  $params   Query parameters if any
+	 * @param array  $params   Path parameters if any
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
 	 * @throws ClientException
@@ -220,11 +220,12 @@ class Client {
 	 *
 	 * @param string $endpoint Endpoint of the resource to delete (see \Pims\Api\Endpoint for the possible values)
 	 * @param int    $id       ID of the resource to delete
+	 * @param array  $params   Path parameters if any
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
 	 * @throws ClientException
 	 */
-	public function deleteOne (string $endpoint, int $id) {
+	public function deleteOne (string $endpoint, int $id, array $params = null) {
 		try {
 			self::substitutePathParameters(
 					$params,
