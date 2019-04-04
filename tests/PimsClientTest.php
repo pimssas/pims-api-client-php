@@ -17,7 +17,7 @@ class PimsClientTest extends TestCase {
 					getenv('PIMS_API_PATH'),
 					getenv('PIMS_API_USER'),
 					getenv('PIMS_API_PASSWORD'));
-		} catch (\Exception $e) {
+		} catch (Exception $e) {
 			self::assertTrue(false, $e->getMessage());
 		}
 	}
@@ -44,7 +44,7 @@ class PimsClientTest extends TestCase {
 					getenv('PIMS_API_USER'),
 					getenv('PIMS_API_PASSWORD'),
 					Client::DEFAULT_VERSION);
-		} catch (\Exception $e) {
+		} catch (Exception $e) {
 			self::assertTrue(false, $e->getMessage());
 		}
 		
@@ -66,7 +66,7 @@ class PimsClientTest extends TestCase {
 		try {
 			$client = self::initClient();
 			$client->setVersion($version);
-		} catch (\Exception $e) {
+		} catch (Exception $e) {
 			self::assertTrue(false, $e->getMessage());
 		}
 		
@@ -84,7 +84,7 @@ class PimsClientTest extends TestCase {
 		try {
 			$client = self::initClient();
 			$client->setLanguage($language);
-		} catch (\Exception $e) {
+		} catch (Exception $e) {
 			self::assertTrue(false, $e->getMessage());
 		}
 		
@@ -102,7 +102,7 @@ class PimsClientTest extends TestCase {
 			$data = self::initClient()->getOne(
 					Endpoint::EVENTS,
 					2127);
-		} catch (\Exception $e) {
+		} catch (Exception $e) {
 			self::assertTrue(false, $e->getMessage());
 		}
 		
@@ -111,11 +111,11 @@ class PimsClientTest extends TestCase {
 				$data,
 				'Failed of the method getOne');
 		self::assertAttributeCount(
-				17,
+				21,
 				'properties',
 				$data);
 		self::assertAttributeCount(
-				11,
+				12,
 				'properties',
 				$data->getFirstResource('venue'));
 		self::assertSame(
@@ -129,7 +129,7 @@ class PimsClientTest extends TestCase {
 	public function testGetAll () {
 		try {
 			$data = $this->initClient()->getAll(Endpoint::EVENTS);
-		} catch (\Exception $e) {
+		} catch (Exception $e) {
 			self::assertTrue(false, $e->getMessage());
 		}
 		
