@@ -20,7 +20,7 @@ php >= 7.0
 ```
 
 
-Installation
+Installation2
 -----
 
 Use [Composer](https://getcomposer.org/) to install. Simply add this line to your `composer.json` file:
