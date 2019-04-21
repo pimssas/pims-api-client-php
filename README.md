@@ -105,7 +105,7 @@ try {
             Endpoint::STREAMS_GROUP,
             ['label' => 'Streams group test']);
            		
-    // Update the status of the promotion by ID 2437
+    // Update the status of the promotion by ID 1437
     $client->patchOne(
             Endpoint::PROMOTIONS,
             1437,
