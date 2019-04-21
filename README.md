@@ -48,21 +48,21 @@ use Pims\Api\Client;
 use Pims\Api\Exception\ClientException;
 
 try {
-    // Minimal setup...
-    $client = new Client(
-    		'https://demo.pims.io/api',
-    		'username',
-    		'password');
+	// Minimal setup...
+	$client = new Client(
+			'https://demo.pims.io/api',
+			'username',
+			'password');
     
-    // ... or full setup, with language and version
-    $client = new Client(
-    		'https://demo.pims.io/api',
-    		'username',
-    		'password',
-    		'fr',
-    		'v1');
+	// ... or full setup, with language and version
+	$client = new Client(
+			'https://demo.pims.io/api',
+			'username',
+			'password',
+			'fr',
+			'v1');
 } catch (ClientException $e) {
-    echo $e->getMessage();
+	echo $e->getMessage();
 }
 ```
 
@@ -71,52 +71,52 @@ Then you can call it on various endpoints, like this:
 use Pims\Api\Endpoint;
 
 try {
-    // Get the label of the event by ID 2127
-    $event = $client->getOne(
-    		Endpoint::EVENTS,
-    		2127);
-    $label = $event->getProperty('label');
+	// Get the label of the event by ID 2127
+	$event = $client->getOne(
+			Endpoint::EVENTS,
+			2127);
+	$label = $event->getProperty('label');
+
+	// Get all events occuring in April 2018
+	$results = $client->getAll(
+			Endpoint::EVENTS,
+			[
+					'from_date'	=> '2018-04-01',
+					'to_date' 	=> '2018-04-30'
+			]);
+	$events = $results->getResource('events');
+	while ($results->hasLink('next')) {
+		$results = $client->getNext($results);
+		$events = array_merge(
+				$events,
+				$results->getResource('events'));
+	}
     
-    // Get all events occuring in April 2018
-    $results = $client->getAll(
-    	Endpoint::EVENTS,
-    	[
-    	    	'from_date'	=> '2018-04-01',
-    	    	'to_date' 	=> '2018-04-30'
-    	]);
-    $events = $results->getResource('events');
-    while ($results->hasLink('next')) {
-    	$results = $client->getNext($results);
-        $events = array_merge(
-        		$events,
-        		$results->getResource('events'));
-    }
-    
-    // Get the first 3 channels applied to the event by ID 2127
-    $promotions = $client->getAll(
-       	Endpoint::EVENTS_CHANNELS,
-       	[
-       	    	':event_id'	=> 2127, 
-       	    	'page_size'	=> 3
-       	]);
+	// Get the first 3 channels applied to the event by ID 2127
+	$promotions = $client->getAll(
+			Endpoint::EVENTS_CHANNELS,
+			[
+					':event_id'	=> 2127, 
+					'page_size'	=> 3
+			]);
     
 	// Create a new streams group
 	$client->postOne(
-         		Endpoint::STREAMS_GROUP,
-           		['label' => 'Streams group test']);
+				Endpoint::STREAMS_GROUP,
+				['label' => 'Streams group test']);
            		
-    // Update the status of the promotion by ID 2437
-    $client->patchOne(
-           		Endpoint::PROMOTIONS,
-           		1437,
-           		['status_id' => 'ENG']);
+	// Update the status of the promotion by ID 2437
+	$client->patchOne(
+			Endpoint::PROMOTIONS,
+			1437,
+			['status_id' => 'ENG']);
     
-    // Delete the venue by ID 234
-    $client->deleteOne(
-     		Endpoint::VENUES,
-       		234);
+	// Delete the venue by ID 234
+	$client->deleteOne(
+			Endpoint::VENUES,
+			234);
 } catch (ClientException $e) {
-    echo $e->getMessage();
+	echo $e->getMessage();
 }
 ```
 
