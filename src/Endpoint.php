@@ -27,7 +27,11 @@ interface Endpoint {
 	
 	const GENRES = '/genres';
 	
+	const IDENTITIES = '/identities';
+	
 	const IMPORTS = '/imports';
+	
+	const ORDERS = '/orders';
 	
 	const PRICERANGES = '/price-ranges';
 	
@@ -45,6 +49,8 @@ interface Endpoint {
 	const STREAMS_GROUPS = '/streams-groups';
 	
 	const SUBSIDIARIES = '/subsidiaries';
+	
+	const TICKETS = '/tickets';
 	
 	const VENUES		= '/venues';
 	const VENUES_LABELS	= '/venues/:venue_id/labels';
