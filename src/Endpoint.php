@@ -52,6 +52,8 @@ interface Endpoint {
 	
 	const TICKETS = '/tickets';
 	
+	const USERS = '/users';
+	
 	const VENUES		= '/venues';
 	const VENUES_LABELS	= '/venues/:venue_id/labels';
 	const VENUE_TYPES	= '/venue-types';
