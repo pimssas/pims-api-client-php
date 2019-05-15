@@ -109,14 +109,14 @@ class Client {
 	/**
 	 * Get a single resource by ID
 	 *
-	 * @param string $endpoint Endpoint of the resource to fetch (see \Pims\Api\Endpoint for the possible values)
-	 * @param int    $id       ID of the resource to fetch
-	 * @param array  $params   Query and/or path parameters if any
+	 * @param string	$endpoint	Endpoint of the resource to fetch (see \Pims\Api\Endpoint for the possible values)
+	 * @param mixed		$id			ID of the resource to fetch
+	 * @param array		$params		Query and/or path parameters if any
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
 	 * @throws ClientException
 	 */
-	public function getOne (string $endpoint, int $id, array $params = null) {
+	public function getOne (string $endpoint, $id, array $params = null) {
 		try {
 			self::substitutePathParameters(
 					$params,
