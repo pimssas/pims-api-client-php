@@ -52,7 +52,8 @@ interface Endpoint {
 	
 	const SUBSIDIARIES = '/subsidiaries';
 	
-	const TICKETS = '/tickets';
+	const TICKETS			= '/tickets';
+	const TICKETS_MOVEMENTS	= '/tickets/:ticket_id/movements';
 	
 	const USERS = '/users';
 	
