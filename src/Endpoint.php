@@ -34,8 +34,6 @@ interface Endpoint {
 	const ORDERS = '/orders';
 	
 	const PRICERANGES = '/price-ranges';
-	
-	const PROFILES = '/profiles';
   
 	const PROMOTIONS				= '/promotions';
 	const PROMOTIONS_ALLOCATIONS	= '/promotions/:promotion_id/allocations';
@@ -55,7 +53,8 @@ interface Endpoint {
 	const TICKETS			= '/tickets';
 	const TICKETS_MOVEMENTS	= '/tickets/:ticket_id/movements';
 	
-	const USERS = '/users';
+	const USERS 		= '/users';
+	const USER_PROFILES = '/user-profiles';
 	
 	const VENUES		= '/venues';
 	const VENUES_LABELS	= '/venues/:venue_id/labels';
