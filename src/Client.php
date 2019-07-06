@@ -190,14 +190,14 @@ class Client {
 	 * Update a single resource by ID
 	 *
 	 * @param string $endpoint Endpoint of the resource to update (see \Pims\Api\Endpoint for the possible values)
-	 * @param int    $id       ID of the resource to update
+	 * @param mixed  $id       ID of the resource to update
 	 * @param array  $body     New values to be updated
 	 * @param array  $params   Path parameters if any
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
 	 * @throws ClientException
 	 */
-	public function patchOne (string $endpoint, int $id, array $body, array $params = null) {
+	public function patchOne (string $endpoint, $id, array $body, array $params = null) {
 		try {
 			self::substitutePathParameters(
 					$params,
@@ -219,13 +219,13 @@ class Client {
 	 * Delete a single resource by ID
 	 *
 	 * @param string $endpoint Endpoint of the resource to delete (see \Pims\Api\Endpoint for the possible values)
-	 * @param int    $id       ID of the resource to delete
+	 * @param mixed  $id       ID of the resource to delete
 	 * @param array  $params   Path parameters if any
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface
 	 * @throws ClientException
 	 */
-	public function deleteOne (string $endpoint, int $id, array $params = null) {
+	public function deleteOne (string $endpoint, $id, array $params = null) {
 		try {
 			self::substitutePathParameters(
 					$params,
