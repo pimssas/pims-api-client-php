@@ -6,7 +6,16 @@ use Exception;
 use Jsor\HalClient;
 use Pims\Api\Exception\ClientException;
 
+/**
+ * @package Pims\Api
+ */
 class Client {
+	
+	/** Properties used for pagination */
+	const PAGINATION_FIRST		= 'first';
+	const PAGINATION_LAST		= 'last';
+	const PAGINATION_PREVIOUS	= 'previous';
+	const PAGINATION_NEXT		= 'next';
 	
 	/**
 	 * Default language of the API
@@ -57,7 +66,7 @@ class Client {
 	
 	
 	/**
-	 * Client constructor.
+	 * Client constructor
 	 *
 	 * @param string $basePath URL of the root URI (e.g.: https://demo.pims.io/api)
 	 * @param string $username Username for the Basic Auth
@@ -83,7 +92,9 @@ class Client {
 	}
 	
 	/**
-	 * @param string $language
+	 * Change the language used by the client
+	 *
+	 * @param string $language	Language of the translatable fields (e.g.: 'fr')
 	 */
 	public function setLanguage (string $language = self::DEFAULT_LANGUAGE) {
 		$this->halClient = $this->halClient->withHeader('Accept-Language', $language);
@@ -240,25 +251,60 @@ class Client {
 		}
 	}
 	
+	/**
+	 * Get the first page of a HAL-paginated collection of resources
+	 *
+	 * @param HalClient\HalResource $resource	Collection from which the page is to be fetched
+	 *
+	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface|null
+	 * @throws ClientException
+	 */
 	public function getFirst (HalClient\HalResource $resource) {
-		return $this->fetchPaginatedResources($resource, 'first');
+		return $this->fetchPaginatedResources($resource, self::PAGINATION_FIRST);
 	}
+	
+	/**
+	 * Get the last page of a HAL-paginated collection of resources
+	 *
+	 * @param HalClient\HalResource $resource	Collection from which the page is to be fetched
+	 *
+	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface|null
+	 * @throws ClientException
+	 */
 	public function getLast (HalClient\HalResource $resource) {
-		return $this->fetchPaginatedResources($resource, 'last');
+		return $this->fetchPaginatedResources($resource, self::PAGINATION_LAST);
 	}
+	
+	/**
+	 * Get the previous page of a HAL-paginated collection of resources
+	 *
+	 * @param HalClient\HalResource $resource	Collection from which the page is to be fetched
+	 *
+	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface|null
+	 * @throws ClientException
+	 */
 	public function getPrevious (HalClient\HalResource $resource) {
-		return $this->fetchPaginatedResources($resource, 'previous');
+		return $this->fetchPaginatedResources($resource, self::PAGINATION_PREVIOUS);
 	}
+	
+	/**
+	 * Get the next page of a HAL-paginated collection of resources
+	 *
+	 * @param HalClient\HalResource $resource	Collection from which the page is to be fetched
+	 *
+	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface|null
+	 * @throws ClientException
+	 */
 	public function getNext (HalClient\HalResource $resource) {
-		return $this->fetchPaginatedResources($resource, 'next');
+		return $this->fetchPaginatedResources($resource, self::PAGINATION_NEXT);
 	}
 	
 	/**
 	 * Generic method to fetch in a HAL-paginated collection of resources
 	 *
-	 * @param HalClient\HalResource $resource     Resource from which to fetch
-	 * @param string                $keyword      Keyword denoting what is to be fetched.
-	 *                             				  Possible values: ['first', 'last', 'previous', 'next']
+	 * @param HalClient\HalResource $resource	Resource from which to fetch
+	 * @param string 				$keyword 	Keyword denoting what is to be fetched
+	 *                        					(See the constants self::PAGINATION_* for the possible values)
 	 *
 	 * @return HalClient\HalResource|\Psr\Http\Message\ResponseInterface|null
 	 * @throws ClientException
@@ -271,7 +317,7 @@ class Client {
 				return null;
 			}
 		} catch (Exception $e) {
-			throw new ClientException('Error while fetching HATEOAS resource.', $e->getCode(), $e);
+			throw new ClientException('Error while fetching paginated resource.', $e->getCode(), $e);
 		}
 	}
 }
