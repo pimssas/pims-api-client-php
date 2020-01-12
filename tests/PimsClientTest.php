@@ -18,7 +18,7 @@ class PimsClientTest extends TestCase {
 					getenv('PIMS_API_USER'),
 					getenv('PIMS_API_PASSWORD'));
 		} catch (Exception $e) {
-			self::assertTrue(false, $e->getMessage());
+			self::fail($e->getMessage());
 		}
 	}
 	
@@ -26,11 +26,9 @@ class PimsClientTest extends TestCase {
 	 * Basic test on constructor
 	 */
 	public function testConstructorBasic () {
-		$client = self::initClient();
-		
 		self::assertInstanceOf(
 				'Pims\Api\Client',
-				$client,
+				self::initClient(),
 				'Failed basic constructor test');
 	}
 	
@@ -45,7 +43,7 @@ class PimsClientTest extends TestCase {
 					getenv('PIMS_API_PASSWORD'),
 					Client::DEFAULT_VERSION);
 		} catch (Exception $e) {
-			self::assertTrue(false, $e->getMessage());
+			self::fail($e->getMessage());
 		}
 		
 		self::assertInstanceOf(
@@ -67,7 +65,7 @@ class PimsClientTest extends TestCase {
 			$client = self::initClient();
 			$client->setVersion($version);
 		} catch (Exception $e) {
-			self::assertTrue(false, $e->getMessage());
+			self::fail($e->getMessage());
 		}
 		
 		self::assertSame(
@@ -85,7 +83,7 @@ class PimsClientTest extends TestCase {
 			$client = self::initClient();
 			$client->setLanguage($language);
 		} catch (Exception $e) {
-			self::assertTrue(false, $e->getMessage());
+			self::fail($e->getMessage());
 		}
 		
 		self::assertSame(
@@ -103,7 +101,7 @@ class PimsClientTest extends TestCase {
 					Endpoint::EVENTS,
 					2127);
 		} catch (Exception $e) {
-			self::assertTrue(false, $e->getMessage());
+			self::fail($e->getMessage());
 		}
 		
 		self::assertInstanceOf(
@@ -130,7 +128,7 @@ class PimsClientTest extends TestCase {
 		try {
 			$data = $this->initClient()->getAll(Endpoint::EVENTS);
 		} catch (Exception $e) {
-			self::assertTrue(false, $e->getMessage());
+			self::fail($e->getMessage());
 		}
 		
 		self::assertInstanceOf(
