@@ -109,13 +109,9 @@ class PimsClientTest extends TestCase {
 				$data,
 				'Failed of the method getOne');
 		self::assertAttributeCount(
-				23,
+				24,
 				'properties',
 				$data);
-		self::assertAttributeCount(
-				12,
-				'properties',
-				$data->getFirstResource('venue'));
 		self::assertSame(
 				'ALAN WILSON',
 				mb_strtoupper($data->getProperty('label')));
