@@ -4,9 +4,9 @@
 Pims PHP API client  
 =========================  
   
-Simple PHP client for the Pims API ([documentation here](http://api.pims.io)).  
+Simple PHP client for the Pims API ([documentation here](http://api.pims.io)).
   
-* [Requirement](#requirement)    
+* [Requirement](#requirement)
 * [Installation](#installation)
 * [Usage](#usage)
 * [License](#license)
@@ -31,7 +31,7 @@ Use [Composer](https://getcomposer.org/) to install. Simply add this line to you
 ```
 and then run:
 ```bash
-$ composer update 
+$ composer update
 ```
 
 Or install directly from the command line:  
