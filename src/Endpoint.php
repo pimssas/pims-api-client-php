@@ -13,10 +13,10 @@ interface Endpoint {
 	const BINDINGS_LOGS		= '/bindings/:binding_id/logs';
 	
 	const CATEGORIES		= '/categories';
-	const CATEGORIESGROUPS	= '/categories-groups';
+	const CATEGORIES_GROUPS	= '/categories-groups';
 	
 	const CHANNELS			= '/channels';
-	const CHANNELSGROUPS 	= '/channels-groups';
+	const CHANNELS_GROUPS 	= '/channels-groups';
 	
 	const EVENTS 						= '/events';
 	const EVENTS_CAPACITIES 			= '/events/:event_id/capacities';
@@ -36,7 +36,7 @@ interface Endpoint {
 	const ORDERS = '/orders';
 	
 	const PRICERANGES 		= '/price-ranges';
-	const PRICERANGESGROUPS = '/price-ranges-groups';
+	const PRICERANGES_GROUPS = '/price-ranges-groups';
 	
 	const PROMOTIONS				= '/promotions';
 	const PROMOTIONS_ALLOCATIONS	= '/promotions/:promotion_id/allocations';
