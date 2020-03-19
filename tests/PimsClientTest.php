@@ -109,7 +109,7 @@ class PimsClientTest extends TestCase {
 				$data,
 				'Failed of the method getOne');
 		self::assertAttributeCount(
-				24,
+				23,
 				'properties',
 				$data);
 		self::assertAttributeCount(
