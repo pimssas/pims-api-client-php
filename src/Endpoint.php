@@ -27,6 +27,8 @@ interface Endpoint {
 	const EVENTS_TICKETCOUNTS_DETAILED	= '/events/:event_id/ticket-counts/detailed';
 	const INPUT_TYPES					= '/input-types';
 	
+	const SERIES_EVENTS			= '/series/:series_id/events';
+	
 	const GENRES = '/genres';
 	
 	const IDENTITIES = '/identities';
