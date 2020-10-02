@@ -18,6 +18,8 @@ interface Endpoint {
 	const CHANNELS			= '/channels';
 	const CHANNELS_GROUPS 	= '/channels-groups';
 	
+	const COUNTRIES			= '/countries';
+	
 	const EVENTS 						= '/events';
 	const EVENTS_CAPACITIES 			= '/events/:event_id/capacities';
 	const EVENTS_CATEGORIES 			= '/events/:event_id/categories';
