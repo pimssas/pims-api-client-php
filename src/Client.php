@@ -14,7 +14,7 @@
 		/** Properties used for pagination */
 		const PAGINATION_FIRST		= 'first';
 		const PAGINATION_LAST		= 'last';
-		const PAGINATION_PREVIOUS	= 'previous';
+		const PAGINATION_PREVIOUS	= 'prev';
 		const PAGINATION_NEXT		= 'next';
 		
 		/**
