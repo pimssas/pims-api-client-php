@@ -13,7 +13,7 @@
     "require": {
         "php": ">=7.0",
         "guzzlehttp/guzzle": "~5.0|~6.0|~7.0",
-        "jeversen/hal-client": "v3.6.0"
+        "jeversen/hal-client": "~3.6"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5|~7.0|~8.0",
