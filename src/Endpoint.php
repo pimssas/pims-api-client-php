@@ -28,9 +28,10 @@ interface Endpoint {
 	const EVENTS_TICKETCOUNTS			= '/events/:event_id/ticket-counts';
 	const EVENTS_TICKETCOUNTS_DETAILED	= '/events/:event_id/ticket-counts/detailed';
 	const INPUT_TYPES					= '/input-types';
-	
-	const SERIES_EVENTS			= '/series/:series_id/events';
-	
+
+	const FEES			= '/fees';
+	const FEES_GROUPS	= '/fees-groups';
+
 	const GENRES = '/genres';
 	
 	const IDENTITIES = '/identities';
@@ -39,16 +40,17 @@ interface Endpoint {
 	
 	const ORDERS = '/orders';
 	
-	const PRICERANGES 		= '/price-ranges';
-	const PRICERANGES_GROUPS = '/price-ranges-groups';
+	const PRICERANGES			= '/price-ranges';
+	const PRICERANGES_GROUPS	= '/price-ranges-groups';
 	
 	const PROMOTIONS				= '/promotions';
 	const PROMOTIONS_ALLOCATIONS	= '/promotions/:promotion_id/allocations';
 	const PROMOTION_TYPES			= '/promotion-types';
 	
-	const SERIES				= '/series';
-	const SERIES_TYPES			= '/series-types';
-	const SERIES_PROMOTIONS 	= '/series/:series_id/promotions';
+	const SERIES			= '/series';
+	const SERIES_EVENTS 	= '/series/:series_id/events';
+	const SERIES_PROMOTIONS = '/series/:series_id/promotions';
+	const SERIES_TYPES		= '/series-types';
 	
 	const STREAMS		= '/streams';
 	const STREAM_TYPES	= '/stream-types';
