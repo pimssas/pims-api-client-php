@@ -17,7 +17,8 @@ interface Endpoint {
 	
 	const CHANNELS			= '/channels';
 	const CHANNELS_GROUPS 	= '/channels-groups';
-	
+	const SALES_BY_CHANNELS = '/stats/sales-by-channels'
+		
 	const COUNTRIES			= '/countries';
 	
 	const EVENTS 						= '/events';
@@ -63,6 +64,8 @@ interface Endpoint {
 	
 	const TICKETS			= '/tickets';
 	const TICKETS_MOVEMENTS	= '/tickets/:ticket_id/movements';
+	
+	const TICKET_COUNTS_IDS = '/ticket-counts-ids-by-events'
 	
 	const USERS 		= '/users';
 	const USER_PROFILES = '/user-profiles';
