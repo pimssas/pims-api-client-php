@@ -188,7 +188,7 @@
 				
 				return $this->halClient->post(
 						$this->getFullPath() . $endpoint,
-						['body' => $body]);
+						['body' => $body, 'query' => $params]);
 			} catch (Exception $e) {
 				throw new ClientException(
 						$e->getMessage(),
