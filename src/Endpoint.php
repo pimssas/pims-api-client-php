@@ -18,7 +18,9 @@ interface Endpoint {
 	const CHANNELS			= '/channels';
 	const CHANNELS_GROUPS 	= '/channels-groups';
 	const SALES_BY_CHANNELS = '/stats/sales-by-channels';
-		
+	const SALES_BY_PRICE_RANGES = '/stats/sales-by-price-ranges';
+	const SALES_BY_CATEGORIES = '/stats/sales-by-categories';
+	
 	const COUNTRIES			= '/countries';
 	
 	const EVENTS 						= '/events';
