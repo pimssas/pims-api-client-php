@@ -17,8 +17,7 @@ interface Endpoint {
 	
 	const CHANNELS			= '/channels';
 	const CHANNELS_GROUPS 	= '/channels-groups';
-	const SALES_BY_CHANNELS = '/stats/sales-by-channels';
-		
+	
 	const COUNTRIES			= '/countries';
 	
 	const EVENTS 						= '/events';
@@ -47,9 +46,13 @@ interface Endpoint {
 	const PROMOTIONS_ALLOCATIONS	= '/promotions/:promotion_id/allocations';
 	const PROMOTION_TYPES			= '/promotion-types';
 	
-	const SERIES				= '/series';
-	const SERIES_TYPES			= '/series-types';
-	const SERIES_PROMOTIONS 	= '/series/:series_id/promotions';
+	const SALES_BY_CHANNELS		= '/stats/sales-by-channels';
+	const SALES_BY_PRICE_RANGES = '/stats/sales-by-price-ranges';
+	const SALES_BY_CATEGORIES	= '/stats/sales-by-categories';
+	
+	const SERIES			= '/series';
+	const SERIES_TYPES		= '/series-types';
+	const SERIES_PROMOTIONS	= '/series/:series_id/promotions';
 	
 	const STREAMS		= '/streams';
 	const STREAM_TYPES	= '/stream-types';
