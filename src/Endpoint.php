@@ -72,7 +72,7 @@ interface Endpoint {
 	const TICKETS			= '/tickets';
 	const TICKETS_MOVEMENTS	= '/tickets/:ticket_id/movements';
 	
-	const TICKET_COUNTS_IDS = '/ticket-counts-ids-by-events';
+	const TICKET_COUNTS_IDS = '/ticket-counts-ids';
 	
 	const USERS 		= '/users';
 	const USER_PROFILES = '/user-profiles';
