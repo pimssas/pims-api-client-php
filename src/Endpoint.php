@@ -54,7 +54,8 @@ interface Endpoint {
 	const GUESTS_QUOTAS	= '/guests-quotas';
 	
 	const SALES_BY_CHANNELS		= '/stats/sales-by-channels';
-	const SALES_BY_PRICE_RANGES = '/stats/sales-by-price-ranges';
+	const SALES_BY_DATES		= '/stats/sales-by-dates';
+	const SALES_BY_PRICE_RANGES	= '/stats/sales-by-price-ranges';
 	const SALES_BY_CATEGORIES	= '/stats/sales-by-categories';
 	
 	const SERIES			= '/series';
