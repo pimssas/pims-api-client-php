@@ -50,8 +50,8 @@ interface Endpoint {
 	const PROMOTIONS_ALLOCATIONS	= '/promotions/:promotion_id/allocations';
 	const PROMOTION_TYPES			= '/promotion-types';
 
-	const GUESTS		= '/guests';
-	const GUESTS_QUOTAS	= '/guests-quotas';
+	const GUESTS		= '/events/:event_id/guests';
+	const GUESTS_QUOTAS	= '/events/:event_id/guests-quotas';
 	
 	const SALES_BY_CHANNELS		= '/stats/sales-by-channels';
 	const SALES_BY_PRICE_RANGES = '/stats/sales-by-price-ranges';
