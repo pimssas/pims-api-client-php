@@ -17,9 +17,9 @@ interface Endpoint {
 	
 	const CHANNELS			= '/channels';
 	const CHANNELS_GROUPS 	= '/channels-groups';
-	
+
 	const COLORS			= '/colors';
-	
+
 	const COUNTRIES			= '/countries';
 	
 	const EVENTS 						= '/events';
@@ -49,7 +49,7 @@ interface Endpoint {
 	const PROMOTIONS				= '/promotions';
 	const PROMOTIONS_ALLOCATIONS	= '/promotions/:promotion_id/allocations';
 	const PROMOTION_TYPES			= '/promotion-types';
-	
+
 	const GUESTS		= '/events/:event_id/guests';
 	const GUESTS_QUOTAS	= '/events/:event_id/guests-quotas';
 	
