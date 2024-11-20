@@ -18,6 +18,8 @@ interface Endpoint {
 	const CHANNELS			= '/channels';
 	const CHANNELS_GROUPS 	= '/channels-groups';
 	
+	const COLORS			= '/colors';
+	
 	const COUNTRIES			= '/countries';
 	
 	const EVENTS 						= '/events';
@@ -47,13 +49,16 @@ interface Endpoint {
 	const PROMOTIONS				= '/promotions';
 	const PROMOTIONS_ALLOCATIONS	= '/promotions/:promotion_id/allocations';
 	const PROMOTION_TYPES			= '/promotion-types';
-
-	const GUESTS		= '/guests';
-	const GUESTS_QUOTAS	= '/guests-quotas';
 	
-	const SALES_BY_CHANNELS		= '/stats/sales-by-channels';
-	const SALES_BY_PRICE_RANGES = '/stats/sales-by-price-ranges';
-	const SALES_BY_CATEGORIES	= '/stats/sales-by-categories';
+	const GUESTS		= '/events/:event_id/guests';
+	const GUESTS_QUOTAS	= '/events/:event_id/guests-quotas';
+	
+	const STATS_EVENTS_CAPACITIES_BY_DATES			= '/stats/events-capacities/by-dates';
+	const STATS_EVENTS_SALES_BY_DATES				= '/stats/events-sales/by-dates';
+	const STATS_EVENTS_SALES_BY_EVENTS_BY_DATES		= '/stats/events-sales/by-events/by-dates';
+	const STATS_EVENTS_SALES_DELTA_BY_CATEGORIES	= '/stats/events-sales-delta/by-categories';
+	const STATS_EVENTS_SALES_DELTA_BY_CHANNELS		= '/stats/events-sales-delta/by-channels';
+	const STATS_EVENTS_SALES_DELTA_BY_PRICE_RANGES	= '/stats/events-sales-delta/by-price-ranges';
 	
 	const SERIES			= '/series';
 	const SERIES_EVENTS 	= '/series/:series_id/events';
