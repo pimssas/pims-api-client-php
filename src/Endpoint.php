@@ -32,7 +32,7 @@ interface Endpoint {
 	const EVENTS_TICKETCOUNTS_DETAILED	= '/events/:event_id/ticket-counts/detailed';
 	const INPUT_TYPES					= '/input-types';
 	
-	const GROUPED_EVENTS_BY_SERIE		= '/grouped-events/by-serie';
+	const GROUPED_EVENTS_BY_SERIES		= '/grouped-events/by-series';
 	
 	const FEES			= '/fees';
 	const FEES_GROUPS	= '/fees-groups';
