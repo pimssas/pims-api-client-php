@@ -33,6 +33,7 @@ interface Endpoint {
 	const INPUT_TYPES					= '/input-types';
 	
 	const GROUPED_EVENTS_BY_SERIES		= '/grouped-events/by-series';
+	const GROUPED_EVENTS_BY_YEAR		= '/grouped-events/by-year';
 	
 	const FEES			= '/fees';
 	const FEES_GROUPS	= '/fees-groups';
