@@ -71,6 +71,8 @@ interface Endpoint {
 	const SERIES_PROMOTIONS	= '/series/:series_id/promotions';
 	const SERIES_TYPES		= '/series-types';
 	
+	const SETTINGS = '/settings';
+	
 	const STREAMS		= '/streams';
 	const STREAM_TYPES	= '/stream-types';
 	
