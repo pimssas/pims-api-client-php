@@ -19,6 +19,8 @@ interface Endpoint {
 	const CHANNELS_GROUPS 	= '/channels-groups';
 
 	const COLORS			= '/colors';
+	
+	const CONTACTS			= '/contacts';
 
 	const COUNTRIES			= '/countries';
 	
