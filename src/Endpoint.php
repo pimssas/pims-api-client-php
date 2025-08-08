@@ -57,6 +57,8 @@ interface Endpoint {
 	const GUESTS		= '/events/:event_id/guests';
 	const GUESTS_QUOTAS	= '/events/:event_id/guests-quotas';
 	
+	const ROLES	= '/roles';
+	
 	const STATS_EVENTS_CAPACITIES_BY_DATES				= '/stats/events-capacities/by-dates';
 	const STATS_EVENTS_CAPACITIES_BY_EVENTS_BY_DATES	= '/stats/events-capacities/by-events/by-dates';
 	const STATS_EVENTS_SALES_BY_DATES					= '/stats/events-sales/by-dates';
