@@ -78,6 +78,8 @@ interface Endpoint {
 	
 	const STREAMS_GROUPS = '/streams-groups';
 	
+	const STRUCTURES = '/structures';
+	
 	const SUBSIDIARIES = '/subsidiaries';
 	
 	const TAGS = '/tags';
